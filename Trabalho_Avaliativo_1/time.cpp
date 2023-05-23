@@ -20,17 +20,23 @@ long int Time::getGolsSofridos(int competicao, int ano) {
     return golsSofridos[competicao][0][ano];
 };
 
-double Time::getMMGolsEfetuados() {
-    return mediaGolsEfetuados;
-};
+double Time::getMMGolsEfetuados(int competicao, int N) {
+    double soma = 0;
+    for (int i = 0; i < N; i++) {
+        soma = soma + golsEfetuados[competicao][0][i];
+    }
+    return (soma/N);
+}
 
-double Time::getMMGolsSofridos() {
-    return mediaGolsSofridos;
-};
+double Time::getMMGolsSofridos(int competicao, int N) {
+    double soma = 0;
+    for (int i = 0; i < N; i++) {
+        soma = soma + golsSofridos[competicao][0][i];
+    }
 
-double Time::computeMMGolsEfetuados(int N) { // N = numero de anos para calcular a média
+    return (soma/N);
+}
 
-};
 
 string Time::getNomeTime() {
     return nomeTime;

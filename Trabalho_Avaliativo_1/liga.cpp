@@ -1,8 +1,9 @@
 #include <iostream>
 #include "liga.h"
 
-Liga::Liga(string _nomeLiga) {
+Liga::Liga(string _nomeLiga, int _codigoLiga) {
     nomeLiga = _nomeLiga;
+    codigoLiga = _codigoLiga;
 };
 
 void Liga::listarTimes() {
@@ -36,3 +37,29 @@ void Liga::inserirTime(Time novoTime) {
     }
     
 };
+
+void Liga::listarMediasMoveisGolsSofridos(int N) {
+    for (long unsigned int i = 0; i < times.size(); i++) {
+        cout
+            << "\nMédia Movel de Gols Sofridos do "
+            << times.at(i).getNomeTime()
+        << endl;
+
+        cout 
+            << times.at(i).getMMGolsSofridos(codigoLiga, N)
+        << endl;
+    }
+} 
+
+void Liga::listarMediasMoveisGolsEfetuados(int N) {
+        for (long unsigned int i = 0; i < times.size(); i++) {
+        cout
+            << "\nMédia Movel de Gols Efetuados do "
+            << times.at(i).getNomeTime()
+        << endl;
+
+        cout 
+            << times.at(i).getMMGolsEfetuados(codigoLiga ,N)
+        << endl;
+    }
+}
