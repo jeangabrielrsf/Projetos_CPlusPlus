@@ -13,11 +13,13 @@ class Liga {
         Liga(string nomeLiga);
         void listarTimes();
         string getNomeLiga();
+        void inserirTime(Time );
 
 
     private:
         string nomeLiga;
         vector<Time> times;
+        const long unsigned maxTimes = 5;
 };
 
 #endif

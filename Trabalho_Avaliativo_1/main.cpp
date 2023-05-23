@@ -1,17 +1,49 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "liga.h"
+#include "time.h"
 
 using namespace std;
 
 int main() {
 
     int escolhaMenu = 0;
+    Time fla("Flamengo");
+    Time flu("Fluminense"); 
+    Time bot("Botafogo");
+    Time vas("Vasco da Gama");
+    Time cru("Cruzeiro");
+
+    Liga camp("Campeonato Brasileiro");
+    Liga copa("Copa do Brasil"), est("Estadual");
+
+    camp.inserirTime(fla);
+    camp.inserirTime(flu);
+    camp.inserirTime(vas);
+    camp.inserirTime(bot);
+    camp.inserirTime(cru);
+
+    copa.inserirTime(fla);
+    copa.inserirTime(flu);
+    copa.inserirTime(vas);
+    copa.inserirTime(bot);
+    copa.inserirTime(cru);
+
+    est.inserirTime(fla);
+    est.inserirTime(flu);
+    est.inserirTime(vas);
+    est.inserirTime(bot);
+
+    camp.listarTimes();
+    copa.listarTimes();
+    est.listarTimes();
 
 
-    system("clear");
+
+
     while (escolhaMenu != -1) {
-        cout << "Menu Principal" << endl;
+        cout << "\n\nMenu Principal" << endl;
         cout << "Escolha uma das opções listadas:" << endl;
         cout << "1 - Exibir evoluão média dos gols realizados e sofridos de cinco times nos últimos anos" << endl;
         cout << "2 - Exibir a evolução do desempenho dos times em determinado campeonato" << endl;
