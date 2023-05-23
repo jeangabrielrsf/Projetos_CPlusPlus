@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <limits>
 #include "liga.h"
 #include "time.h"
 
@@ -17,6 +18,16 @@
 
 
 using namespace std;
+
+
+
+bool validarEscolhaMedia(int n) {
+    if(n < 3 || n > 7) {
+        return true;
+    }
+    return false;
+}
+
 
 int main() {
 
@@ -174,16 +185,38 @@ int main() {
         
 
         cin >> escolhaMenu;
+        while(true) {
+            if(cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Escolha um valor correto!!!" << endl;
+                cin >> escolhaMenu;
+            } else {
+                break;
+            }
+
+        }
+     
+
 
         cout << "Você escolheu -> " << escolhaMenu << endl;
 
         switch (escolhaMenu) {
             case 1:
                 system("clear");
-                cout << "escolhi a opção 1" << endl;
                 cout << "Escolha o tamanho da média móvel." << endl;
                 cout << "(Escolher um número entre 3 e 7)" << endl;
                 cin >> escolhaTamanhoMedia;
+                while (validarEscolhaMedia(escolhaTamanhoMedia)) {
+                    cout << "Impossível usar este valor! Escolha novamente" << endl;
+                    cin >> escolhaTamanhoMedia;
+                    if(cin.fail()) {
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        cin >> escolhaTamanhoMedia;
+                    }
+                }
+
                 camp.listarMediasMoveisGolsEfetuados(escolhaTamanhoMedia);
                 camp.listarMediasMoveisGolsSofridos(escolhaTamanhoMedia);
 
