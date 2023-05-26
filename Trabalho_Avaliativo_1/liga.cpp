@@ -73,6 +73,55 @@ void Liga::listarMediasMoveis(int N) {
 }
 
 void Liga::listarDesempenho() {
+
+    double desempenhoTime[5];
+
+    for (int i = 0; i < 5; i++) {
+        desempenhoTime[i] = times.at(i).getMMGolsEfetuados(codigoLiga, 3);
+    }
+    //INCOMPLETOOOOOOOOOOOOOOOO
     system("clear");
+    //listar os desempenhos dos times
+
+}
+
+void Liga::exibirMaiorSaldo() {
+    long int maiorSaldo = 0;
+    int indexTime, indexAno, ano;
+    //TO-DO : Talvez seria melhor criar um método privado para calcular isso
+    //        e fazer esse método aqui só mostrar a parada já calculada
+    for (long unsigned int i = 0; i < times.size(); i++) {
+        for (int j = 0; j < 7; j++) {
+            long int diferenca =  (
+                times.at(i).getGolsEfetuados(codigoLiga, j) 
+                - times.at(i).getGolsSofridos(codigoLiga, j)
+            );
+            if (diferenca > maiorSaldo) {
+                maiorSaldo = diferenca;
+                indexTime = i;
+                indexAno = j;
+                ano = 2023 - indexAno;
+            }
+        }
+    }
+
+
+    system("clear");
+    cout << "Considerando dados de 2023 até 2017..." << endl;
+
+    cout 
+        << "\nTime com maior saldo de gols em "
+        << nomeLiga << ": "
+        << times.at(indexTime).getNomeTime()
+        << "\nAno: " << (ano)
+        << "\nGols efetuados: "
+        << times.at(indexTime).getGolsEfetuados(codigoLiga, indexAno)
+        <<"\nGols sofridos: "
+        << times.at(indexTime).getGolsSofridos(codigoLiga, indexAno)
+        << "\nSaldo: "
+        << maiorSaldo
+    << endl;
     
 }
+
+

@@ -16,7 +16,8 @@ class Liga {
         void inserirTime(Time );
 
         void listarMediasMoveis(int );
-        void listarDesempenho(int );
+        void exibirMaiorSaldo();
+        void listarDesempenho();
 
 
     private:

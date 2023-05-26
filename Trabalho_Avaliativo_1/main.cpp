@@ -559,9 +559,9 @@ int main() {
                 system("clear");
                 cout 
                     << "Digite o código do campeonato desejado:"
-                    << "\n1 - CAMPEONATO BRASILEIRO"
-                    << "\n2 - COPA DO BRASIL"
-                    << "\n3 - ESTADUAL"
+                    << "\n0 - CAMPEONATO BRASILEIRO"
+                    << "\n1 - COPA DO BRASIL"
+                    << "\n2 - ESTADUAL"
                 << endl;
 
                 cin >> escolhaCampeonato;
@@ -589,7 +589,42 @@ int main() {
 
             case 4:
                 system("clear");
-                cout << "escolhi a 4" << endl;
+                 cout 
+                    << "Digite o código do campeonato desejado:"
+                    << "\n0 - CAMPEONATO BRASILEIRO"
+                    << "\n1 - COPA DO BRASIL"
+                    << "\n2 - ESTADUAL"
+                << endl;
+
+                cin >> escolhaCampeonato;
+                while(erroEscolhaCampeonato(escolhaCampeonato)) {
+                    cout << "Impossível usar este valor! Escolha novamente" << endl;
+                    cin >> escolhaCampeonato;
+                    if(cin.fail()) {
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        cin >> escolhaCampeonato;
+                    }
+                }
+
+                switch (escolhaCampeonato) {
+                    case 0:
+                        camp.exibirMaiorSaldo();
+                    break;
+
+                    case 1:
+                        copa.exibirMaiorSaldo();
+                    break;
+
+                    case 2:
+                        est.exibirMaiorSaldo();
+                    break;
+
+                    default:
+                        cout <<"escolheu errado hein..." << endl;
+                    break;
+                } 
+
             break;
 
             case 5:
