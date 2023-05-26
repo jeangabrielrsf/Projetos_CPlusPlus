@@ -14,8 +14,9 @@ class Liga {
         void listarTimes();
         string getNomeLiga();
         void inserirTime(Time );
-        void listarMediasMoveisGolsSofridos(int );
-        void listarMediasMoveisGolsEfetuados(int );
+
+        void listarMediasMoveis(int );
+        void listarDesempenho(int );
 
 
     private:

@@ -19,15 +19,23 @@ class Time { //cada instância representa um time de futebol brasileiro
         double getMMGolsSofridos(int competicao, int N);
         double getMMGolsEfetuados(int competicao, int N);
 
+        double getMMTotalSofridos(int N);
+        double getMMTotalEfetuados(int N);
+
+        void somarGolsSofridos();
+        void somarGolsEfetuados();
+
+
         string getNomeTime();
+
+
         
 
     private:
         long int golsSofridos[3][1][7], golsEfetuados[3][1][7];
         string nomeTime;
 
-        double MMGolsSofridos, MMGolsEfetuados;
-
+        long int totalGolsSofridos[7], totalGolsEfetuados[7];
 };
 
 

@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <limits>
+#include <iomanip>
 #include "liga.h"
 #include "time.h"
 
@@ -16,23 +17,21 @@
 // e assim sucessivamente...
 
 
+extern bool validarEscolhaMedia(int n);
+extern bool erroEscolhaCampeonato(int n);
+
 
 using namespace std;
 
 
 
-bool validarEscolhaMedia(int n) {
-    if(n < 3 || n > 7) {
-        return true;
-    }
-    return false;
-}
+
 
 
 int main() {
 
     int escolhaMenu = 0;
-    int escolhaTamanhoMedia;
+    int escolhaTamanhoMedia, escolhaCampeonato;
     Time fla("Flamengo");
     Time flu("Fluminense"); 
     Time bot("Botafogo");
@@ -41,10 +40,12 @@ int main() {
     Time test("Vai dar erro!");
 
     Liga camp("Campeonato Brasileiro", CAMPEONATO_BRASILEIRO);
-    Liga copa("Copa do Brasil", COPA_DO_BRASIL), est("Estadual", ESTADUAL);
+    Liga copa("Copa do Brasil", COPA_DO_BRASIL);
+    Liga est("Estadual", ESTADUAL);
 
 
     //INSERINDO DADOS DO FLAMENGO NOS ÚLTIMOS 7 ANOS (CONTANDO O ATUAL)
+    //NO CAMPEONATO BRASILEIRO
     fla.setGolsEfetuados(CAMPEONATO_BRASILEIRO, 13, ANO_ATUAL);
     fla.setGolsSofridos(CAMPEONATO_BRASILEIRO, 9, ANO_ATUAL);
 
@@ -66,8 +67,57 @@ int main() {
     fla.setGolsEfetuados(CAMPEONATO_BRASILEIRO, 49, ANO_ATUAL+6);
     fla.setGolsSofridos(CAMPEONATO_BRASILEIRO, 38, ANO_ATUAL+6);
 
+    //INSERINDO DADOS DO FLAMENGO NOS ÚLTIMOS 7 ANOS (CONTANDO O ATUAL)
+    //NA COPA DO BRASIL
+    fla.setGolsEfetuados(COPA_DO_BRASIL, 8, ANO_ATUAL);
+    fla.setGolsSofridos(COPA_DO_BRASIL, 4, ANO_ATUAL);
+
+    fla.setGolsEfetuados(COPA_DO_BRASIL, 13, ANO_ATUAL+1);
+    fla.setGolsSofridos(COPA_DO_BRASIL, 5, ANO_ATUAL+1);
+
+    fla.setGolsEfetuados(COPA_DO_BRASIL, 18, ANO_ATUAL+2);
+    fla.setGolsSofridos(COPA_DO_BRASIL, 5, ANO_ATUAL+2);
+
+    fla.setGolsEfetuados(COPA_DO_BRASIL, 5, ANO_ATUAL+3);
+    fla.setGolsSofridos(COPA_DO_BRASIL, 7, ANO_ATUAL+3);
+
+    fla.setGolsEfetuados(COPA_DO_BRASIL, 4, ANO_ATUAL+4);
+    fla.setGolsSofridos(COPA_DO_BRASIL, 2, ANO_ATUAL+4);
+
+    fla.setGolsEfetuados(COPA_DO_BRASIL, 4, ANO_ATUAL+5);
+    fla.setGolsSofridos(COPA_DO_BRASIL, 3, ANO_ATUAL+5);
+
+    fla.setGolsEfetuados(COPA_DO_BRASIL, 8, ANO_ATUAL+6);
+    fla.setGolsSofridos(COPA_DO_BRASIL, 6, ANO_ATUAL+6);
+
+    //INSERINDO DADOS DO FLAMENGO NOS ÚLTIMOS 7 ANOS (CONTANDO O ATUAL)
+    //NO CAMPEONATO ESTADUAL
+    fla.setGolsEfetuados(ESTADUAL, 28, ANO_ATUAL);
+    fla.setGolsSofridos(ESTADUAL, 13, ANO_ATUAL);
+
+    fla.setGolsEfetuados(ESTADUAL, 30, ANO_ATUAL+1);
+    fla.setGolsSofridos(ESTADUAL, 11, ANO_ATUAL+1);
+
+    fla.setGolsEfetuados(ESTADUAL, 34, ANO_ATUAL+2);
+    fla.setGolsSofridos(ESTADUAL, 13, ANO_ATUAL+2);
+
+    fla.setGolsEfetuados(ESTADUAL, 34, ANO_ATUAL+3);
+    fla.setGolsSofridos(ESTADUAL, 11, ANO_ATUAL+3);
+
+    fla.setGolsEfetuados(ESTADUAL, 33, ANO_ATUAL+4);
+    fla.setGolsSofridos(ESTADUAL, 13, ANO_ATUAL+4);
+
+    fla.setGolsEfetuados(ESTADUAL, 23, ANO_ATUAL+5);
+    fla.setGolsSofridos(ESTADUAL, 8, ANO_ATUAL+5);
+
+    fla.setGolsEfetuados(ESTADUAL, 39, ANO_ATUAL+6);
+    fla.setGolsSofridos(ESTADUAL, 12, ANO_ATUAL+6);
+
+
+
 
 //INSERINDO DADOS DO FLUMINENSE NOS ÚLTIMOS 7 ANOS (CONTANDO O ATUAL)
+//NO CAMPEONATO BRASILEIRO
     flu.setGolsEfetuados(CAMPEONATO_BRASILEIRO, 12, ANO_ATUAL);
     flu.setGolsSofridos(CAMPEONATO_BRASILEIRO, 6, ANO_ATUAL);
 
@@ -90,7 +140,61 @@ int main() {
     flu.setGolsSofridos(CAMPEONATO_BRASILEIRO, 53, ANO_ATUAL+6);
 
 
+//INSERINDO DADOS DO FLUMINENSE NOS ÚLTIMOS 7 ANOS (CONTANDO O ATUAL)
+//NA COPA DO BRASIL
+
+    flu.setGolsEfetuados(COPA_DO_BRASIL, 6, ANO_ATUAL);
+    flu.setGolsSofridos(COPA_DO_BRASIL, 0, ANO_ATUAL);
+
+    flu.setGolsEfetuados(COPA_DO_BRASIL, 15, ANO_ATUAL+1);
+    flu.setGolsSofridos(COPA_DO_BRASIL, 10, ANO_ATUAL+1);
+
+    flu.setGolsEfetuados(COPA_DO_BRASIL, 8, ANO_ATUAL+2);
+    flu.setGolsSofridos(COPA_DO_BRASIL, 7, ANO_ATUAL+2);
+    
+    flu.setGolsEfetuados(COPA_DO_BRASIL, 11, ANO_ATUAL+3);
+    flu.setGolsSofridos(COPA_DO_BRASIL, 6, ANO_ATUAL+3);
+
+    flu.setGolsEfetuados(COPA_DO_BRASIL, 15, ANO_ATUAL+4);
+    flu.setGolsSofridos(COPA_DO_BRASIL, 5, ANO_ATUAL+4);
+
+    flu.setGolsEfetuados(COPA_DO_BRASIL, 7, ANO_ATUAL+5);
+    flu.setGolsSofridos(COPA_DO_BRASIL, 3, ANO_ATUAL+5);
+
+    flu.setGolsEfetuados(COPA_DO_BRASIL, 17, ANO_ATUAL+6);
+    flu.setGolsSofridos(COPA_DO_BRASIL, 13, ANO_ATUAL+6);
+
+
+//INSERINDO DADOS DO FLUMINENSE NOS ÚLTIMOS 7 ANOS (CONTANDO O ATUAL)
+//NO ESTADUAL
+
+    flu.setGolsEfetuados(ESTADUAL, 32, ANO_ATUAL);
+    flu.setGolsSofridos(ESTADUAL, 9, ANO_ATUAL);
+
+    flu.setGolsEfetuados(ESTADUAL, 21, ANO_ATUAL+1);
+    flu.setGolsSofridos(ESTADUAL, 5, ANO_ATUAL+1);
+
+    flu.setGolsEfetuados(ESTADUAL, 26, ANO_ATUAL+2);
+    flu.setGolsSofridos(ESTADUAL, 17, ANO_ATUAL+2);
+    
+    flu.setGolsEfetuados(ESTADUAL, 27, ANO_ATUAL+3);
+    flu.setGolsSofridos(ESTADUAL, 13, ANO_ATUAL+3);
+
+    flu.setGolsEfetuados(ESTADUAL, 26, ANO_ATUAL+4);
+    flu.setGolsSofridos(ESTADUAL, 13, ANO_ATUAL+4);
+
+    flu.setGolsEfetuados(ESTADUAL, 23, ANO_ATUAL+5);
+    flu.setGolsSofridos(ESTADUAL, 11, ANO_ATUAL+5);
+
+    flu.setGolsEfetuados(ESTADUAL, 34, ANO_ATUAL+6);
+    flu.setGolsSofridos(ESTADUAL, 17, ANO_ATUAL+6);
+
+
+
+
+
 //INSERINDO DADOS DO BOTAFOGO NOS ÚLTIMOS 7 ANOS (CONTANDO O ATUAL)
+//NO CAMPEONATO BRASILEIRO
     bot.setGolsEfetuados(CAMPEONATO_BRASILEIRO, 14, ANO_ATUAL);
     bot.setGolsSofridos(CAMPEONATO_BRASILEIRO, 6, ANO_ATUAL);
 
@@ -113,7 +217,63 @@ int main() {
     bot.setGolsSofridos(CAMPEONATO_BRASILEIRO, 42, ANO_ATUAL+6);
 
 
+
+
+//INSERINDO DADOS DO BOTAFOGO NOS ÚLTIMOS 7 ANOS (CONTANDO O ATUAL)
+//NA COPA DO BRASIL
+    bot.setGolsEfetuados(COPA_DO_BRASIL, 14, ANO_ATUAL);
+    bot.setGolsSofridos(COPA_DO_BRASIL, 5, ANO_ATUAL);
+
+    bot.setGolsEfetuados(COPA_DO_BRASIL, 6, ANO_ATUAL+1);
+    bot.setGolsSofridos(COPA_DO_BRASIL, 5, ANO_ATUAL+1);
+
+    bot.setGolsEfetuados(COPA_DO_BRASIL, 6, ANO_ATUAL+2);
+    bot.setGolsSofridos(COPA_DO_BRASIL, 1, ANO_ATUAL+2);
+
+    bot.setGolsEfetuados(COPA_DO_BRASIL, 6, ANO_ATUAL+3);
+    bot.setGolsSofridos(COPA_DO_BRASIL, 4, ANO_ATUAL+3);
+
+    bot.setGolsEfetuados(COPA_DO_BRASIL, 7, ANO_ATUAL+4);
+    bot.setGolsSofridos(COPA_DO_BRASIL, 3, ANO_ATUAL+4);
+
+    bot.setGolsEfetuados(COPA_DO_BRASIL, 1, ANO_ATUAL+5);
+    bot.setGolsSofridos(COPA_DO_BRASIL, 2, ANO_ATUAL+5);
+
+    bot.setGolsEfetuados(COPA_DO_BRASIL, 6, ANO_ATUAL+6);
+    bot.setGolsSofridos(COPA_DO_BRASIL, 4, ANO_ATUAL+6);
+
+
+
+
+//INSERINDO DADOS DO BOTAFOGO NOS ÚLTIMOS 7 ANOS (CONTANDO O ATUAL)
+//NO CAMPEONATO ESTADUAL
+    bot.setGolsEfetuados(ESTADUAL, 23, ANO_ATUAL);
+    bot.setGolsSofridos(ESTADUAL, 10, ANO_ATUAL);
+
+    bot.setGolsEfetuados(ESTADUAL, 26, ANO_ATUAL+1);
+    bot.setGolsSofridos(ESTADUAL, 18, ANO_ATUAL+1);
+
+    bot.setGolsEfetuados(ESTADUAL, 16, ANO_ATUAL+2);
+    bot.setGolsSofridos(ESTADUAL, 10, ANO_ATUAL+2);
+
+    bot.setGolsEfetuados(ESTADUAL, 15, ANO_ATUAL+3);
+    bot.setGolsSofridos(ESTADUAL, 15, ANO_ATUAL+3);
+
+    bot.setGolsEfetuados(ESTADUAL, 15, ANO_ATUAL+4);
+    bot.setGolsSofridos(ESTADUAL, 13, ANO_ATUAL+4);
+
+    bot.setGolsEfetuados(ESTADUAL, 20, ANO_ATUAL+5);
+    bot.setGolsSofridos(ESTADUAL, 20, ANO_ATUAL+5);
+
+    bot.setGolsEfetuados(ESTADUAL, 23, ANO_ATUAL+6);
+    bot.setGolsSofridos(ESTADUAL, 19, ANO_ATUAL+6);
+
+
+
+
+
 //INSERINDO DADOS DO PALMEIRAS NOS ÚLTIMOS 7 ANOS (CONTANDO O ATUAL)
+//NO CAMPEONATO BRASILEIRO
     pal.setGolsEfetuados(CAMPEONATO_BRASILEIRO, 16, ANO_ATUAL);
     pal.setGolsSofridos(CAMPEONATO_BRASILEIRO, 6, ANO_ATUAL);
 
@@ -135,7 +295,56 @@ int main() {
     pal.setGolsEfetuados(CAMPEONATO_BRASILEIRO, 61, ANO_ATUAL+6);
     pal.setGolsSofridos(CAMPEONATO_BRASILEIRO, 45, ANO_ATUAL+6);
 
+//NA COPA DO BRASIL
+    pal.setGolsEfetuados(COPA_DO_BRASIL, 8, ANO_ATUAL);
+    pal.setGolsSofridos(COPA_DO_BRASIL, 3, ANO_ATUAL);
+
+    pal.setGolsEfetuados(COPA_DO_BRASIL, 6, ANO_ATUAL+1);
+    pal.setGolsSofridos(COPA_DO_BRASIL, 4, ANO_ATUAL+1);
+
+    pal.setGolsEfetuados(COPA_DO_BRASIL, 1, ANO_ATUAL+2);
+    pal.setGolsSofridos(COPA_DO_BRASIL, 1, ANO_ATUAL+2);
+
+    pal.setGolsEfetuados(COPA_DO_BRASIL, 15, ANO_ATUAL+3);
+    pal.setGolsSofridos(COPA_DO_BRASIL, 4, ANO_ATUAL+3);
+
+    pal.setGolsEfetuados(COPA_DO_BRASIL, 4, ANO_ATUAL+4);
+    pal.setGolsSofridos(COPA_DO_BRASIL, 1, ANO_ATUAL+4);
+
+    pal.setGolsEfetuados(COPA_DO_BRASIL, 5, ANO_ATUAL+5);
+    pal.setGolsSofridos(COPA_DO_BRASIL, 4, ANO_ATUAL+5);
+
+    pal.setGolsEfetuados(COPA_DO_BRASIL, 6, ANO_ATUAL+6);
+    pal.setGolsSofridos(COPA_DO_BRASIL, 6, ANO_ATUAL+6);
+
+
+//NO CAMPEONATO ESTADUAL
+    pal.setGolsEfetuados(ESTADUAL, 25, ANO_ATUAL);
+    pal.setGolsSofridos(ESTADUAL, 7, ANO_ATUAL);
+
+    pal.setGolsEfetuados(ESTADUAL, 26, ANO_ATUAL+1);
+    pal.setGolsSofridos(ESTADUAL, 7, ANO_ATUAL+1);
+
+    pal.setGolsEfetuados(ESTADUAL, 21, ANO_ATUAL+2);
+    pal.setGolsSofridos(ESTADUAL, 12, ANO_ATUAL+2);
+
+    pal.setGolsEfetuados(ESTADUAL, 21, ANO_ATUAL+3);
+    pal.setGolsSofridos(ESTADUAL, 7, ANO_ATUAL+3);
+
+    pal.setGolsEfetuados(ESTADUAL, 19, ANO_ATUAL+4);
+    pal.setGolsSofridos(ESTADUAL, 6, ANO_ATUAL+4);
+
+    pal.setGolsEfetuados(ESTADUAL, 30, ANO_ATUAL+5);
+    pal.setGolsSofridos(ESTADUAL, 11, ANO_ATUAL+5);
+
+    pal.setGolsEfetuados(ESTADUAL, 30, ANO_ATUAL+6);
+    pal.setGolsSofridos(ESTADUAL, 12, ANO_ATUAL+6);
+
+
+
+
 //INSERINDO DADOS DO CORINTHIANS NOS ÚLTIMOS 7 ANOS (CONTANDO O ATUAL)
+//NO CAMPEONATO BRASILEIRO
     cor.setGolsEfetuados(CAMPEONATO_BRASILEIRO, 6, ANO_ATUAL);
     cor.setGolsSofridos(CAMPEONATO_BRASILEIRO, 12, ANO_ATUAL);
 
@@ -159,25 +368,89 @@ int main() {
 
 
 
+//NA COPA DO BRASIL
+    cor.setGolsEfetuados(COPA_DO_BRASIL, 2, ANO_ATUAL);
+    cor.setGolsSofridos(COPA_DO_BRASIL, 4, ANO_ATUAL);
+
+    cor.setGolsEfetuados(COPA_DO_BRASIL, 17, ANO_ATUAL+1);
+    cor.setGolsSofridos(COPA_DO_BRASIL, 8, ANO_ATUAL+1);
+
+    cor.setGolsEfetuados(COPA_DO_BRASIL, 4, ANO_ATUAL+2);
+    cor.setGolsSofridos(COPA_DO_BRASIL, 3, ANO_ATUAL+2);
+
+    cor.setGolsEfetuados(COPA_DO_BRASIL, 1, ANO_ATUAL+3);
+    cor.setGolsSofridos(COPA_DO_BRASIL, 2, ANO_ATUAL+3);
+
+    cor.setGolsEfetuados(COPA_DO_BRASIL, 11, ANO_ATUAL+4);
+    cor.setGolsSofridos(COPA_DO_BRASIL, 9, ANO_ATUAL+4);
+
+    cor.setGolsEfetuados(COPA_DO_BRASIL, 8, ANO_ATUAL+5);
+    cor.setGolsSofridos(COPA_DO_BRASIL, 5, ANO_ATUAL+5);
+
+    cor.setGolsEfetuados(COPA_DO_BRASIL, 6, ANO_ATUAL+6);
+    cor.setGolsSofridos(COPA_DO_BRASIL, 3, ANO_ATUAL+6);
+
+
+
+
+//NO CAMPEONATO ESTADUAL
+    cor.setGolsEfetuados(ESTADUAL, 20, ANO_ATUAL);
+    cor.setGolsSofridos(ESTADUAL, 11, ANO_ATUAL);
+
+    cor.setGolsEfetuados(ESTADUAL, 21, ANO_ATUAL+1);
+    cor.setGolsSofridos(ESTADUAL, 12, ANO_ATUAL+1);
+
+    cor.setGolsEfetuados(ESTADUAL, 21, ANO_ATUAL+2);
+    cor.setGolsSofridos(ESTADUAL, 12, ANO_ATUAL+2);
+
+    cor.setGolsEfetuados(ESTADUAL, 19, ANO_ATUAL+3);
+    cor.setGolsSofridos(ESTADUAL, 11, ANO_ATUAL+3);
+
+    cor.setGolsEfetuados(ESTADUAL, 16, ANO_ATUAL+4);
+    cor.setGolsSofridos(ESTADUAL, 13, ANO_ATUAL+4);
+
+    cor.setGolsEfetuados(ESTADUAL, 23, ANO_ATUAL+5);
+    cor.setGolsSofridos(ESTADUAL, 13, ANO_ATUAL+5);
+
+    cor.setGolsEfetuados(ESTADUAL, 22, ANO_ATUAL+6);
+    cor.setGolsSofridos(ESTADUAL, 11, ANO_ATUAL+6);
+
+
     camp.inserirTime(fla);
     camp.inserirTime(flu);
     camp.inserirTime(pal);
     camp.inserirTime(bot);
     camp.inserirTime(cor);
 
-    camp.listarTimes();
+  
+    copa.inserirTime(fla);
+    copa.inserirTime(flu);
+    copa.inserirTime(pal);
+    copa.inserirTime(bot);
+    copa.inserirTime(cor);
 
+
+    est.inserirTime(fla);
+    est.inserirTime(flu);
+    est.inserirTime(pal);
+    est.inserirTime(bot);
+    est.inserirTime(cor);
+
+
+
+
+    system("clear");
 
 
 
 
     while (escolhaMenu != -1) {
-        cout << "\n#######################" << endl;
+        cout << "\n\n#######################" << endl;
         cout << "Menu Principal" << endl;
         cout << "Escolha uma das opções listadas:" << endl;
-        cout << "1 - Exibir evoluão média dos gols realizados e sofridos de cinco times nos últimos anos" << endl;
-        cout << "2 - Exibir a evolução do desempenho dos times em determinado campeonato" << endl;
-        cout << "3 - Exibir a evoliução dos times em todos os campeonatos" << endl;
+        cout << "1 - Exibir evolução média dos gols realizados e sofridos de cinco times nos últimos anos" << endl;
+        cout << "2 - Exibir a evolução do desempenho dos times em determinado campeonato em relação ao ano anterior" << endl;
+        cout << "3 - Exibir a evolução dos times em todos os campeonatos em relaçao ao ano anterior" << endl;
         cout << "4 - Exibir o time com o maior saldo de gols em um campeonato" << endl;
         cout << "5 - Mostrar qual time teve a maior evolução de desempenho em relação ao ano anterior" << endl;
         cout << "#######################" << endl;
@@ -196,10 +469,6 @@ int main() {
             }
 
         }
-     
-
-
-        cout << "Você escolheu -> " << escolhaMenu << endl;
 
         switch (escolhaMenu) {
             case 1:
@@ -217,14 +486,100 @@ int main() {
                     }
                 }
 
-                camp.listarMediasMoveisGolsEfetuados(escolhaTamanhoMedia);
-                camp.listarMediasMoveisGolsSofridos(escolhaTamanhoMedia);
+                system("clear");
+                cout << "\nMedias Moveis no ultimos " << escolhaTamanhoMedia << " anos..." << endl;
+                
+                camp.listarMediasMoveis(escolhaTamanhoMedia);
+                copa.listarMediasMoveis(escolhaTamanhoMedia);
+                est.listarMediasMoveis(escolhaTamanhoMedia);
+
+                cout
+                    << "\nMédias Móveis Totais do " << fla.getNomeTime() << ":" 
+                << endl;
+                cout
+                    << "Média Total de gols efetuados: "
+                    << fla.getMMTotalEfetuados(escolhaTamanhoMedia)
+                << endl;
+                cout
+                    << "Média Total de gols sofridos: "
+                    << fla.getMMTotalSofridos(escolhaTamanhoMedia)
+                << endl;
+
+                 cout
+                    << "\nMédias Móveis Totais do " << flu.getNomeTime() << ":" 
+                << endl;
+                cout
+                    << "Média Total de gols efetuados: "
+                    << flu.getMMTotalEfetuados(escolhaTamanhoMedia)
+                << endl;
+                cout
+                    << "Média Total de gols sofridos: "
+                    << flu.getMMTotalSofridos(escolhaTamanhoMedia)
+                << endl;
+
+                 cout
+                    << "\nMédias Móveis Totais do " << bot.getNomeTime() << ":" 
+                << endl;
+                cout
+                    << "Média Total de gols efetuados: "
+                    << bot.getMMTotalEfetuados(escolhaTamanhoMedia)
+                << endl;
+                cout
+                    << "Média Total de gols sofridos: "
+                    << bot.getMMTotalSofridos(escolhaTamanhoMedia)
+                << endl;
+
+                 cout
+                    << "\nMédias Móveis Totais do " << pal.getNomeTime() << ":" 
+                << endl;
+                cout
+                    << "Média Total de gols efetuados: "
+                    << pal.getMMTotalEfetuados(escolhaTamanhoMedia)
+                << endl;
+                cout
+                    << "Média Total de gols sofridos: "
+                    << pal.getMMTotalSofridos(escolhaTamanhoMedia)
+                << endl;
+
+                 cout
+                    << "\nMédias Móveis Totais do " << cor.getNomeTime() << ":" 
+                << endl;
+                cout
+                    << "Média Total de gols efetuados: "
+                    << cor.getMMTotalEfetuados(escolhaTamanhoMedia)
+                << endl;
+                cout
+                    << "Média Total de gols sofridos: "
+                    << cor.getMMTotalSofridos(escolhaTamanhoMedia)
+                << endl;
 
             break;
 
             case 2:
                 system("clear");
-                cout << "escolhi a 2" << endl;
+                cout 
+                    << "Digite o código do campeonato desejado:"
+                    << "\n1 - CAMPEONATO BRASILEIRO"
+                    << "\n2 - COPA DO BRASIL"
+                    << "\n3 - ESTADUAL"
+                << endl;
+
+                cin >> escolhaCampeonato;
+                while(erroEscolhaCampeonato(escolhaCampeonato)) {
+                    cout << "Impossível usar este valor! Escolha novamente" << endl;
+                    cin >> escolhaCampeonato;
+                    if(cin.fail()) {
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        cin >> escolhaCampeonato;
+                    }
+                }
+
+                
+
+
+
+
             break;
 
             case 3:
