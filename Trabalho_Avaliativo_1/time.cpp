@@ -20,17 +20,17 @@ long int Time::getGolsSofridos(int competicao, int ano) {
     return golsSofridos[competicao][0][ano];
 };
 
-double Time::getMMGolsEfetuados(int competicao, int N) {
+double Time::getMMGolsEfetuados(int competicao, int min, int N) {
     double soma = 0;
-    for (int i = 0; i < N; i++) {
+    for (int i = min; i < N; i++) {
         soma = soma + golsEfetuados[competicao][0][i];
     }
     return (soma/N);
 }
 
-double Time::getMMGolsSofridos(int competicao, int N) {
+double Time::getMMGolsSofridos(int competicao, int min, int N) {
     double soma = 0;
-    for (int i = 0; i < N; i++) {
+    for (int i = min; i < N; i++) {
         soma = soma + golsSofridos[competicao][0][i];
     }
 

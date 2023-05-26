@@ -59,12 +59,12 @@ void Liga::listarMediasMoveis(int N) {
         cout 
             << "Gols efetuados: "
             << setprecision(2) << fixed
-            << times.at(i).getMMGolsEfetuados(codigoLiga ,N)
+            << times.at(i).getMMGolsEfetuados(codigoLiga , 0, N)
         << endl;
 
         cout
             << "Gols sofridos: "
-            << times.at(i).getMMGolsSofridos(codigoLiga, N)
+            << times.at(i).getMMGolsSofridos(codigoLiga, 0, N)
         << endl;
     }
     cout    
@@ -74,14 +74,74 @@ void Liga::listarMediasMoveis(int N) {
 
 void Liga::listarDesempenho() {
 
-    double desempenhoTime[5];
+    double desempenhoGolsEfetuados[maxTimes];
+    double desempenhoGolsSofridos[maxTimes];
+    double MMAnoAtualEfetuados, MMAnoAtualSofridos;
+    double MMAnoAnteriorEfetuados, MMAnoAnteriorSofridos;
 
-    for (int i = 0; i < 5; i++) {
-        desempenhoTime[i] = times.at(i).getMMGolsEfetuados(codigoLiga, 3);
+    for (long unsigned int i = 0; i < times.size(); i++) {
+        MMAnoAtualEfetuados = times.at(i).getMMGolsEfetuados(codigoLiga, 0, 3);
+        MMAnoAnteriorEfetuados = times.at(i).getMMGolsEfetuados(codigoLiga, 1, 4);
+        desempenhoGolsEfetuados[i] = (MMAnoAtualEfetuados/MMAnoAnteriorEfetuados);
+
+        MMAnoAtualSofridos = times.at(i).getMMGolsSofridos(codigoLiga, 0, 3);
+        MMAnoAnteriorSofridos = times.at(i).getMMGolsSofridos(codigoLiga, 1, 4);
+        desempenhoGolsSofridos[i] = (MMAnoAtualSofridos/MMAnoAnteriorSofridos);
     }
     //INCOMPLETOOOOOOOOOOOOOOOO
     system("clear");
     //listar os desempenhos dos times
+
+    cout
+        << "\nAnálise de Desempenho no(a) "
+        << nomeLiga
+    << endl;
+
+    cout << "\nTimes com melhoria de desempenho:" << endl;
+    for (long unsigned int i=0; i < maxTimes; i++) {
+       if (desempenhoGolsEfetuados[i] > 1.05 || desempenhoGolsSofridos[i] < 0.95) {
+            cout
+                << "\nTime: "
+                << times.at(i).getNomeTime()
+                << "\nDesempenho em gols efetuados: "
+                << setprecision(2) << desempenhoGolsEfetuados[i]
+                <<"\nDesempenho em gols sofridos: "
+                << setprecision(2) << desempenhoGolsSofridos[i]
+            << endl;
+       }
+    }
+
+    cout << "\nTimes com piora de desempenho:" << endl;
+    for (long unsigned int i=0; i < maxTimes; i++) {
+       if (desempenhoGolsEfetuados[i] < 0.95 || desempenhoGolsSofridos[i] > 1.05) {
+            cout
+                << "\nTime: "
+                << times.at(i).getNomeTime()
+                << "\nDesempenho em gols efetuados: "
+                << setprecision(2) << desempenhoGolsEfetuados[i]
+                <<"\nDesempenho em gols sofridos: "
+                << setprecision(2) << desempenhoGolsSofridos[i]
+            << endl;
+       }
+    }
+
+    cout << "\nTimes em estabilidade:" << endl; 
+    for (long unsigned i=0; i < maxTimes; i++) {
+       if (
+            (desempenhoGolsEfetuados[i] >= 0.95 && desempenhoGolsEfetuados[i] <= 1.05)
+            && 
+            (desempenhoGolsSofridos[i] <= 1.05 && desempenhoGolsSofridos[i] >= 0.95)
+            ) {
+            cout
+                << "\nTime: "
+                << times.at(i).getNomeTime()
+                << "\nDesempenho em gols efetuados: "
+                << setprecision(2) << desempenhoGolsEfetuados[i]
+                <<"\nDesempenho em gols sofridos: "
+                << setprecision(2) << desempenhoGolsSofridos[i]
+            << endl;
+       }
+    }
 
 }
 

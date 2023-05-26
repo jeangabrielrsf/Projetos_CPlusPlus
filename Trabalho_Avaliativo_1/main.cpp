@@ -553,6 +553,7 @@ int main() {
                     << cor.getMMTotalSofridos(escolhaTamanhoMedia)
                 << endl;
 
+
             break;
 
             case 2:
@@ -574,11 +575,23 @@ int main() {
                         cin >> escolhaCampeonato;
                     }
                 }
+                switch (escolhaCampeonato) {
+                    case 0:
+                        camp.listarDesempenho();
+                    break;
 
-                
+                    case 1:
+                        copa.listarDesempenho();
+                    break;
 
+                    case 2:
+                        est.listarDesempenho();
+                    break;
 
-
+                    default:
+                        cout << "Escolheu errado..." << endl;
+                    break;
+                }
 
             break;
 
