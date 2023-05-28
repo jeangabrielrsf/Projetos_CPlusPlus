@@ -14,6 +14,9 @@
 //Se ano atual = 2023, 2022 = ANO_ATUAL + 1,
 // 2021 = ANO_ATUAL + 2
 // 2020 = ANO_ATUAL + 3
+// 2019 = ANO_ATUAL + 4
+// 2018
+// 2017
 // e assim sucessivamente...
 
 
@@ -498,11 +501,11 @@ int main() {
                 << endl;
                 cout
                     << "Média Total de gols efetuados: "
-                    << fla.getMMTotalEfetuados(escolhaTamanhoMedia)
+                    << fla.getMMTotalEfetuados(0, escolhaTamanhoMedia)
                 << endl;
                 cout
                     << "Média Total de gols sofridos: "
-                    << fla.getMMTotalSofridos(escolhaTamanhoMedia)
+                    << fla.getMMTotalSofridos(0, escolhaTamanhoMedia)
                 << endl;
 
                  cout
@@ -510,11 +513,11 @@ int main() {
                 << endl;
                 cout
                     << "Média Total de gols efetuados: "
-                    << flu.getMMTotalEfetuados(escolhaTamanhoMedia)
+                    << flu.getMMTotalEfetuados(0, escolhaTamanhoMedia)
                 << endl;
                 cout
                     << "Média Total de gols sofridos: "
-                    << flu.getMMTotalSofridos(escolhaTamanhoMedia)
+                    << flu.getMMTotalSofridos(0, escolhaTamanhoMedia)
                 << endl;
 
                  cout
@@ -522,11 +525,11 @@ int main() {
                 << endl;
                 cout
                     << "Média Total de gols efetuados: "
-                    << bot.getMMTotalEfetuados(escolhaTamanhoMedia)
+                    << bot.getMMTotalEfetuados(0, escolhaTamanhoMedia)
                 << endl;
                 cout
                     << "Média Total de gols sofridos: "
-                    << bot.getMMTotalSofridos(escolhaTamanhoMedia)
+                    << bot.getMMTotalSofridos(0, escolhaTamanhoMedia)
                 << endl;
 
                  cout
@@ -534,11 +537,11 @@ int main() {
                 << endl;
                 cout
                     << "Média Total de gols efetuados: "
-                    << pal.getMMTotalEfetuados(escolhaTamanhoMedia)
+                    << pal.getMMTotalEfetuados(0, escolhaTamanhoMedia)
                 << endl;
                 cout
                     << "Média Total de gols sofridos: "
-                    << pal.getMMTotalSofridos(escolhaTamanhoMedia)
+                    << pal.getMMTotalSofridos(0, escolhaTamanhoMedia)
                 << endl;
 
                  cout
@@ -546,11 +549,11 @@ int main() {
                 << endl;
                 cout
                     << "Média Total de gols efetuados: "
-                    << cor.getMMTotalEfetuados(escolhaTamanhoMedia)
+                    << cor.getMMTotalEfetuados(0, escolhaTamanhoMedia)
                 << endl;
                 cout
                     << "Média Total de gols sofridos: "
-                    << cor.getMMTotalSofridos(escolhaTamanhoMedia)
+                    << cor.getMMTotalSofridos(0, escolhaTamanhoMedia)
                 << endl;
 
 
@@ -577,14 +580,17 @@ int main() {
                 }
                 switch (escolhaCampeonato) {
                     case 0:
+                        system("clear");
                         camp.listarDesempenho();
                     break;
 
                     case 1:
+                        system("clear");
                         copa.listarDesempenho();
                     break;
 
                     case 2:
+                        system("clear");
                         est.listarDesempenho();
                     break;
 
@@ -597,7 +603,11 @@ int main() {
 
             case 3:
                 system("clear");
-                cout << "escolhi a 3" << endl;
+                cout << "Listando o desempenho de todos os campeonatos" << endl;
+
+                camp.listarDesempenho();
+                copa.listarDesempenho();
+                est.listarDesempenho();
             break;
 
             case 4:

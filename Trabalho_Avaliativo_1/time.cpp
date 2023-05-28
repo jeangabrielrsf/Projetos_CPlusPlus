@@ -61,16 +61,16 @@ void Time::somarGolsEfetuados() {
 };
 
 
-double Time::getMMTotalSofridos(int N) {
+double Time::getMMTotalSofridos(int min, int N) {
     somarGolsSofridos();
     double soma = 0;
-    for (int i = 0; i < N; i++) {
+    for (int i = min; i < N; i++) {
         soma = soma + totalGolsSofridos[i];
     }
     return (soma/N);
 };
 
-double Time::getMMTotalEfetuados(int N) {
+double Time::getMMTotalEfetuados(int min, int N) {
     somarGolsEfetuados();
     double soma = 0;
     for (int i = 0; i < N; i++) {
