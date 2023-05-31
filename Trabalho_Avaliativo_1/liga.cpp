@@ -72,10 +72,7 @@ void Liga::listarMediasMoveis(int N) {
     <<endl;
 }
 
-void Liga::listarDesempenho() {
-
-    double desempenhoGolsEfetuados[maxTimes];
-    double desempenhoGolsSofridos[maxTimes];
+void Liga::computarDesempenho() {
     double MMAnoAtualEfetuados, MMAnoAtualSofridos;
     double MMAnoAnteriorEfetuados, MMAnoAnteriorSofridos;
 
@@ -88,9 +85,12 @@ void Liga::listarDesempenho() {
         MMAnoAnteriorSofridos = times.at(i).getMMGolsSofridos(codigoLiga, 1, 4);
         desempenhoGolsSofridos[i] = (MMAnoAtualSofridos/MMAnoAnteriorSofridos);
     }
-    
-    //listar os desempenhos dos times
+}
 
+
+void Liga::listarDesempenho() {
+   computarDesempenho();
+    //listar os desempenhos dos times
     cout
         << "\nAnálise de Desempenho no(a) "
         << nomeLiga
@@ -181,6 +181,38 @@ void Liga::exibirMaiorSaldo() {
         << maiorSaldo
     << endl;
     
-}
+};
 
 
+
+Time Liga::maiorEvolucaoGolsEfetuados() {
+    long unsigned timeIndice;
+    double maiorDesempenho = 0;
+    for (long unsigned i = 0; i < maxTimes ; i++) {
+
+        cout << "TESTE!!!" << endl;
+        cout << "Des[" << i << "]: " << desempenhoGolsEfetuados[i] << endl;
+
+        if(maiorDesempenho < desempenhoGolsEfetuados[i]) {
+            maiorDesempenho = desempenhoGolsEfetuados[i];
+            timeIndice = i;
+        }
+    }
+
+    return times.at(timeIndice);
+};
+
+Time Liga::maiorEvolucaoGolsSofridos() {
+    long unsigned timeIndice;
+    double maiorDesempenho = 1;
+    for (long unsigned i = 0; i < maxTimes; i++) {
+        cout << "TESTE!!!" << endl;
+        cout << "Des[" << i << "]: " << desempenhoGolsSofridos[i] << endl;
+        if(desempenhoGolsSofridos[i] < maiorDesempenho) {
+            maiorDesempenho = desempenhoGolsSofridos[i];
+            timeIndice = i;
+        }
+    }
+
+    return times.at(timeIndice);
+};

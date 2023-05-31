@@ -18,13 +18,21 @@ class Liga {
         void listarMediasMoveis(int );
         void exibirMaiorSaldo();
         void listarDesempenho();
+        Time maiorEvolucao();
 
 
     private:
         string nomeLiga;
         int codigoLiga;
+
         vector<Time> times;
-        const long unsigned maxTimes = 5;
+        
+        const static long unsigned maxTimes = 5;
+
+        double desempenhoGolsEfetuados[maxTimes];
+        double desempenhoGolsSofridos[maxTimes];
+
+        void computarDesempenho();
 };
 
 #endif

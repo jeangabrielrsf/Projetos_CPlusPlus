@@ -652,7 +652,7 @@ int main() {
 
             case 5:
                 system("clear");
-                cout << "escolhi a 5" << endl;    
+                cout << "Time com maior evolução" << endl;    
             break;
 
             case -1:
