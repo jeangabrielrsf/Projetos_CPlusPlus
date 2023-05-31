@@ -29,12 +29,6 @@ void Liga::inserirTime(Time novoTime) {
         << endl;
     } else {
         times.push_back(novoTime);
-        // cout 
-        //     << "\nTime "
-        //     << novoTime.getNomeTime()
-        //     << " adicionado com sucesso "
-        //     << "em " << nomeLiga
-        // << endl;
     }
     
 };
@@ -164,8 +158,6 @@ void Liga::exibirMaiorSaldo() {
         }
     }
 
-
-    system("clear");
     cout << "Considerando dados de 2023 até 2017..." << endl;
 
     cout 
@@ -185,13 +177,10 @@ void Liga::exibirMaiorSaldo() {
 
 
 
-Time Liga::maiorEvolucaoGolsEfetuados() {
+long unsigned Liga::maiorEvolucaoGolsEfetuados() {
     long unsigned timeIndice;
     double maiorDesempenho = 0;
     for (long unsigned i = 0; i < maxTimes ; i++) {
-
-        cout << "TESTE!!!" << endl;
-        cout << "Des[" << i << "]: " << desempenhoGolsEfetuados[i] << endl;
 
         if(maiorDesempenho < desempenhoGolsEfetuados[i]) {
             maiorDesempenho = desempenhoGolsEfetuados[i];
@@ -199,20 +188,39 @@ Time Liga::maiorEvolucaoGolsEfetuados() {
         }
     }
 
-    return times.at(timeIndice);
+    return (timeIndice);
 };
 
-Time Liga::maiorEvolucaoGolsSofridos() {
+long unsigned Liga::maiorEvolucaoGolsSofridos() {
     long unsigned timeIndice;
     double maiorDesempenho = 1;
     for (long unsigned i = 0; i < maxTimes; i++) {
-        cout << "TESTE!!!" << endl;
-        cout << "Des[" << i << "]: " << desempenhoGolsSofridos[i] << endl;
         if(desempenhoGolsSofridos[i] < maiorDesempenho) {
             maiorDesempenho = desempenhoGolsSofridos[i];
             timeIndice = i;
         }
     }
 
-    return times.at(timeIndice);
+    return (timeIndice);
 };
+
+double Liga::DesempenhoGolsEfetuadosTime(long unsigned indice) {
+    return desempenhoGolsEfetuados[indice];
+};
+
+double Liga::DesempenhoGolsSofridosTime(long unsigned indice) {
+    return desempenhoGolsSofridos[indice];
+};
+
+Time Liga::buscarTimePorIndice(long unsigned indice) {
+    return times[indice];
+}
+
+long unsigned Liga::buscarTimePorNome(string nome) {
+    for (long unsigned i = 0; i < times.size(); i++) {
+        if (nome == times.at(i).getNomeTime()) {
+            return i;
+        }
+    }
+    return -1;
+}

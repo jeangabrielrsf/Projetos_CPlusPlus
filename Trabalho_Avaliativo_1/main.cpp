@@ -3,8 +3,10 @@
 #include <string>
 #include <limits>
 #include <iomanip>
+#include <cstdlib>
 #include "liga.h"
 #include "time.h"
+#include "utils.h"
 
 #define CAMPEONATO_BRASILEIRO           0
 #define COPA_DO_BRASIL                  1
@@ -22,6 +24,9 @@
 
 extern bool validarEscolhaMedia(int n);
 extern bool erroEscolhaCampeonato(int n);
+extern double compararMaiorNumero(int n1, int n2, int n3);
+extern retornoDesempenhoGF compararMaiorDesempenhoGolsFeitos(Liga liga1, Liga liga2, Liga liga3);
+extern retornoDesempenhoGS compararMelhorDesempenhoGolsSofridos(Liga liga1, Liga liga2, Liga liga3);
 
 
 using namespace std;
@@ -35,12 +40,14 @@ int main() {
 
     int escolhaMenu = 0;
     int escolhaTamanhoMedia, escolhaCampeonato;
+    int escolhaEnter;
     Time fla("Flamengo");
     Time flu("Fluminense"); 
     Time bot("Botafogo");
     Time pal("Palmeiras");
     Time cor("Corinthians");
-    Time test("Vai dar erro!");
+    retornoDesempenhoGF timeMaiorDesempenhoGF;
+    retornoDesempenhoGS timeMaiorDesempenhoGS;
 
     Liga camp("Campeonato Brasileiro", CAMPEONATO_BRASILEIRO);
     Liga copa("Copa do Brasil", COPA_DO_BRASIL);
@@ -445,10 +452,14 @@ int main() {
     system("clear");
 
 
+    camp.computarDesempenho();
+    copa.computarDesempenho();
+    est.computarDesempenho();
+
 
 
     while (escolhaMenu != -1) {
-        cout << "\n\n#######################" << endl;
+        cout << "#######################" << endl;
         cout << "Menu Principal" << endl;
         cout << "Escolha uma das opções listadas:" << endl;
         cout << "1 - Exibir evolução média dos gols realizados e sofridos de cinco times nos últimos anos" << endl;
@@ -468,6 +479,7 @@ int main() {
                 cout << "Escolha um valor correto!!!" << endl;
                 cin >> escolhaMenu;
             } else {
+
                 break;
             }
 
@@ -488,6 +500,8 @@ int main() {
                         cin >> escolhaTamanhoMedia;
                     }
                 }
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
                 system("clear");
                 cout << "\nMedias Moveis no ultimos " << escolhaTamanhoMedia << " anos..." << endl;
@@ -557,6 +571,15 @@ int main() {
                 << endl;
 
 
+                cout << "\n\n\nPressione ENTER para voltar ao menu principal..." << endl;
+                escolhaEnter = cin.get();
+                while (escolhaEnter != '\n') {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    escolhaEnter = cin.get();
+                }
+
+                system("clear");
             break;
 
             case 2:
@@ -578,6 +601,9 @@ int main() {
                         cin >> escolhaCampeonato;
                     }
                 }
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
                 switch (escolhaCampeonato) {
                     case 0:
                         system("clear");
@@ -599,15 +625,36 @@ int main() {
                     break;
                 }
 
+                cout << "\n\n\nPressione ENTER para voltar ao menu principal..." << endl;
+                escolhaEnter = cin.get();
+                while (escolhaEnter != '\n') {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    escolhaEnter = cin.get();
+                }
+
+                system("clear");
             break;
 
             case 3:
                 system("clear");
+
                 cout << "Listando o desempenho de todos os campeonatos" << endl;
 
                 camp.listarDesempenho();
                 copa.listarDesempenho();
                 est.listarDesempenho();
+
+                cout << "\n\n\nPressione ENTER para voltar ao menu principal..." << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                escolhaEnter = cin.get();
+                while (escolhaEnter != '\n') {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    escolhaEnter = cin.get();
+                }
+                system("clear");
             break;
 
             case 4:
@@ -629,6 +676,8 @@ int main() {
                         cin >> escolhaCampeonato;
                     }
                 }
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
                 switch (escolhaCampeonato) {
                     case 0:
@@ -648,11 +697,49 @@ int main() {
                     break;
                 } 
 
+                cout << "\n\n\nPressione ENTER para voltar ao menu principal..." << endl;
+                escolhaEnter = cin.get();
+                while (escolhaEnter != '\n') {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    escolhaEnter = cin.get();
+                }
+                system("clear");
+
             break;
 
             case 5:
                 system("clear");
-                cout << "Time com maior evolução" << endl;    
+                timeMaiorDesempenhoGF = compararMaiorDesempenhoGolsFeitos(camp, copa, est);
+                timeMaiorDesempenhoGS = compararMelhorDesempenhoGolsSofridos(camp, copa, est);
+                cout 
+                    << "Time com maior evolução em gols feitos: " 
+                    << timeMaiorDesempenhoGF.nomeTime 
+                << endl;
+                cout
+                    << "Evolucao do Desempenho em gols efetuados: "
+                    << setprecision(2) << timeMaiorDesempenhoGF.desempenhoGolsFeitos
+                << endl;
+                cout 
+                    << "Time com maior evolucao em gols sofridos:"
+                    << timeMaiorDesempenhoGS.nomeTime 
+                << endl;
+
+                cout
+                    << "Evolucao do desempenho em gols sofridos: "
+                    << setprecision(2) << timeMaiorDesempenhoGS.desempenhoGolsSofridos
+                << endl;
+
+                cout << "\n\n\nPressione ENTER para voltar ao menu principal..." << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                escolhaEnter = cin.get();
+                while (escolhaEnter != '\n') {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    escolhaEnter = cin.get();
+                }
+                system("clear");
             break;
 
             case -1:
@@ -662,7 +749,6 @@ int main() {
 
             default:
                 system("clear");
-                cout << "bobo, escolhe alguma coisa aí" << endl;
             break;
         }
     }

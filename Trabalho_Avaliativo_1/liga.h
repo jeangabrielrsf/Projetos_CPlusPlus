@@ -18,8 +18,15 @@ class Liga {
         void listarMediasMoveis(int );
         void exibirMaiorSaldo();
         void listarDesempenho();
-        Time maiorEvolucao();
+        long unsigned maiorEvolucaoGolsEfetuados();
+        long unsigned maiorEvolucaoGolsSofridos();
 
+        double DesempenhoGolsEfetuadosTime(long unsigned indice);
+        double DesempenhoGolsSofridosTime(long unsigned indice);
+
+        Time buscarTimePorIndice(long unsigned indice);
+        long unsigned buscarTimePorNome(string nome);
+        void computarDesempenho();
 
     private:
         string nomeLiga;
@@ -32,7 +39,7 @@ class Liga {
         double desempenhoGolsEfetuados[maxTimes];
         double desempenhoGolsSofridos[maxTimes];
 
-        void computarDesempenho();
+
 };
 
 #endif
