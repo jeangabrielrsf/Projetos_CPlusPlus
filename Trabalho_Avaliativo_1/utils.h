@@ -51,6 +51,7 @@ double compararMaiorNumero(double n1, double n2, double n3) {
 };
 
 retornoDesempenhoGF compararMaiorDesempenhoGolsFeitos(Liga liga1, Liga liga2, Liga liga3) {
+    retornoDesempenhoGF resposta;
 
     if (
         liga1.DesempenhoGolsEfetuadosTime(liga1.maiorEvolucaoGolsEfetuados())
@@ -62,10 +63,8 @@ retornoDesempenhoGF compararMaiorDesempenhoGolsFeitos(Liga liga1, Liga liga2, Li
         liga3.DesempenhoGolsEfetuadosTime(liga3.maiorEvolucaoGolsEfetuados())
         ) 
         {
-            return {
-                liga1.buscarTimePorIndice(liga1.maiorEvolucaoGolsEfetuados()).getNomeTime(),
-                liga1.DesempenhoGolsEfetuadosTime(liga1.maiorEvolucaoGolsEfetuados()),
-            };
+            resposta.nomeTime = liga1.buscarTimePorIndice(liga1.maiorEvolucaoGolsEfetuados()).getNomeTime();
+            resposta.desempenhoGolsFeitos = liga1.DesempenhoGolsEfetuadosTime(liga1.maiorEvolucaoGolsEfetuados());
     } else if (
         liga2.DesempenhoGolsEfetuadosTime(liga2.maiorEvolucaoGolsEfetuados())
         >
@@ -75,19 +74,18 @@ retornoDesempenhoGF compararMaiorDesempenhoGolsFeitos(Liga liga1, Liga liga2, Li
         >
         liga3.DesempenhoGolsEfetuadosTime(liga3.maiorEvolucaoGolsEfetuados())
     ) {
-        return {
-            liga2.buscarTimePorIndice(liga2.maiorEvolucaoGolsEfetuados()).getNomeTime(),
-            liga2.DesempenhoGolsEfetuadosTime(liga2.maiorEvolucaoGolsEfetuados())
-        };
+        resposta.nomeTime = liga2.buscarTimePorIndice(liga2.maiorEvolucaoGolsEfetuados()).getNomeTime();
+        resposta.desempenhoGolsFeitos = liga2.DesempenhoGolsEfetuadosTime(liga2.maiorEvolucaoGolsEfetuados());
+
     } else {
-        return {
-            liga3.buscarTimePorIndice(liga3.maiorEvolucaoGolsEfetuados()).getNomeTime(),
-            liga3.DesempenhoGolsEfetuadosTime(liga3.maiorEvolucaoGolsEfetuados())
-        };
+        resposta.nomeTime =  liga3.buscarTimePorIndice(liga3.maiorEvolucaoGolsEfetuados()).getNomeTime();
+        resposta.desempenhoGolsFeitos = liga3.DesempenhoGolsEfetuadosTime(liga3.maiorEvolucaoGolsEfetuados());
     }
-}
+    return resposta;
+};
 
 retornoDesempenhoGS compararMelhorDesempenhoGolsSofridos(Liga liga1, Liga liga2, Liga liga3) {
+    retornoDesempenhoGS resposta;
     if (
         liga1.DesempenhoGolsSofridosTime(liga1.maiorEvolucaoGolsSofridos())
         <
@@ -97,10 +95,8 @@ retornoDesempenhoGS compararMelhorDesempenhoGolsSofridos(Liga liga1, Liga liga2,
         <
         liga3.DesempenhoGolsSofridosTime(liga3.maiorEvolucaoGolsSofridos())
     ) {
-        return {
-            liga1.buscarTimePorIndice(liga1.maiorEvolucaoGolsSofridos()).getNomeTime(),
-            liga1.DesempenhoGolsSofridosTime(liga1.maiorEvolucaoGolsSofridos())
-        };
+        resposta.nomeTime = liga1.buscarTimePorIndice(liga1.maiorEvolucaoGolsSofridos()).getNomeTime();
+        resposta.desempenhoGolsSofridos = liga1.DesempenhoGolsSofridosTime(liga1.maiorEvolucaoGolsSofridos());
     } else if (
         liga2.DesempenhoGolsSofridosTime(liga2.maiorEvolucaoGolsSofridos())
         <
@@ -110,14 +106,11 @@ retornoDesempenhoGS compararMelhorDesempenhoGolsSofridos(Liga liga1, Liga liga2,
         <
         liga3.DesempenhoGolsSofridosTime(liga3.maiorEvolucaoGolsSofridos())
     ) {
-        return {
-            liga2.buscarTimePorIndice(liga2.maiorEvolucaoGolsSofridos()).getNomeTime(),
-            liga2.DesempenhoGolsSofridosTime(liga2.maiorEvolucaoGolsSofridos())
-        };
+        resposta.nomeTime = liga2.buscarTimePorIndice(liga2.maiorEvolucaoGolsSofridos()).getNomeTime();
+        resposta.desempenhoGolsSofridos = liga2.DesempenhoGolsSofridosTime(liga2.maiorEvolucaoGolsSofridos());
     } else {
-        return {
-            liga3.buscarTimePorIndice(liga3.maiorEvolucaoGolsSofridos()).getNomeTime(),
-            liga3.DesempenhoGolsSofridosTime(liga3.maiorEvolucaoGolsSofridos())
-        };
+        resposta.nomeTime = liga3.buscarTimePorIndice(liga3.maiorEvolucaoGolsSofridos()).getNomeTime();
+        resposta.desempenhoGolsSofridos = liga3.DesempenhoGolsSofridosTime(liga3.maiorEvolucaoGolsSofridos());
     }
-}
+    return resposta;
+};
