@@ -8,7 +8,8 @@ PROGRAM=executeApp
 all: $(PROGRAM)
 
 $(PROGRAM) : $(OBJECTS)
-	$(CC) $(OBJECTS) -o $@
+	$(CC) $(OBJECTS) -o $@ 
+
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
