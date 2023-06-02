@@ -21,7 +21,7 @@ bool validarEscolhaMedia(int n) {
 };
 
 bool erroEscolhaCampeonato(int n) {
-    if (n < 0 || n > 3) {
+    if (n < 0 || n > 2) {
         return true;
     }
     return false;
