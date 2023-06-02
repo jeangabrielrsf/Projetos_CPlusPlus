@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Avaliativo_1",
-      "program": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Avaliativo_1/build/Debug/outDebug",
+      "cwd": "/home/jeanfrusca/Documentos/Faculdade/2023-1/LingProg/Projetos_CPlusPlus/Trabalho_Avaliativo_1",
+      "program": "/home/jeanfrusca/Documentos/Faculdade/2023-1/LingProg/Projetos_CPlusPlus/Trabalho_Avaliativo_1/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
