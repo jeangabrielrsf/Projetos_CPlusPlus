@@ -1,6 +1,19 @@
 #include "liga.h"
 #include "time.h"
 
+#define CAMPEONATO_BRASILEIRO           0
+#define COPA_DO_BRASIL                  1
+#define ESTADUAL                        2
+
+#define ANO_ATUAL                       0
+//Se ano atual = 2023, 2022 = ANO_ATUAL + 1,
+// 2021 = ANO_ATUAL + 2
+// 2020 = ANO_ATUAL + 3
+// 2019 = ANO_ATUAL + 4
+// 2018
+// 2017
+// e assim sucessivamente...
+
 struct retornoDesempenhoGF
 {
     string nomeTime;

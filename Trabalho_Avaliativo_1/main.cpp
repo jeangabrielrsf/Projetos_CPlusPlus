@@ -21,20 +21,7 @@
 // 2017
 // e assim sucessivamente...
 
-
-extern bool validarEscolhaMedia(int n);
-extern bool erroEscolhaCampeonato(int n);
-extern double compararMaiorNumero(int n1, int n2, int n3);
-extern retornoDesempenhoGF compararMaiorDesempenhoGolsFeitos(Liga liga1, Liga liga2, Liga liga3);
-extern retornoDesempenhoGS compararMelhorDesempenhoGolsSofridos(Liga liga1, Liga liga2, Liga liga3);
-
-
 using namespace std;
-
-
-
-
-
 
 int main() {
 
@@ -425,20 +412,18 @@ int main() {
     cor.setGolsEfetuados(ESTADUAL, 22, ANO_ATUAL+6);
     cor.setGolsSofridos(ESTADUAL, 11, ANO_ATUAL+6);
 
-
+    //INSERINDO OS TIMES NAS COMPETIÇÕES
     camp.inserirTime(fla);
     camp.inserirTime(flu);
     camp.inserirTime(pal);
     camp.inserirTime(bot);
     camp.inserirTime(cor);
 
-  
     copa.inserirTime(fla);
     copa.inserirTime(flu);
     copa.inserirTime(pal);
     copa.inserirTime(bot);
     copa.inserirTime(cor);
-
 
     est.inserirTime(fla);
     est.inserirTime(flu);
@@ -446,12 +431,9 @@ int main() {
     est.inserirTime(bot);
     est.inserirTime(cor);
 
-
-
-
     system("clear");
 
-
+    //COMPUTANDO O DESEMPENHO E DEIXANDO DADOS PRONTOS
     camp.computarDesempenho();
     copa.computarDesempenho();
     est.computarDesempenho();
