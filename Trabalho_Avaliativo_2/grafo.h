@@ -10,8 +10,13 @@ using namespace std;
 
 class Grafo {
     public:
+        Grafo();
         void inserirAresta(Aresta *);
         void imprimirCaminho();
+        double custoCaminho();
+
+        void lerArquivo();
+        void salvarArquivo();
 
     private:
         vector<Aresta *>arestas;
