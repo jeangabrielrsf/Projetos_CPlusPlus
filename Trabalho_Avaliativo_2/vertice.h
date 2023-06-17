@@ -10,6 +10,7 @@ class Vertice {
     public:
         Vertice(string rotuloVertice);
         string getRotulo();
+        void setRotulo(string rotuloVertice);
 
     private:
         string rotulo;

@@ -7,3 +7,7 @@ Vertice::Vertice(string rotuloVertice) {
 string Vertice::getRotulo(){
     return rotulo;
 }
+
+void Vertice::setRotulo(string rotuloVertice) {
+    rotulo = rotuloVertice;
+}

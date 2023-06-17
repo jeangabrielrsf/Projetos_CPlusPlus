@@ -10,7 +10,6 @@ using namespace std;
 
 class Grafo {
     public:
-        Grafo();
         void inserirAresta(Aresta *);
         void imprimirCaminho();
         double custoCaminho();
@@ -18,10 +17,15 @@ class Grafo {
         void lerArquivo();
         void salvarArquivo();
 
+        vector<string> contaVertices();
+        vector<int> contaArestas();
+
+        int getArestasSize();
+
     private:
         vector<Aresta *>arestas;
         fstream file;
-        string nomeArquivo;
+        const string nomeArquivo = "grafos.txt";
 };
 
 #endif
