@@ -26,6 +26,7 @@ class Grafo {
         vector<Aresta *>arestas;
         fstream file;
         const string nomeArquivo = "grafos.txt";
+        vector<vector<double>> matrizAdj;
 };
 
 #endif
