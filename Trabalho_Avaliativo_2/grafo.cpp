@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "grafo.h"
 
 
@@ -147,4 +148,44 @@ void Grafo::salvarArquivo() {
 
 int Grafo::getArestasSize() {
     return arestas.size();
+}
+
+
+void Grafo::gerarMatriz() {
+    vector<string> vertices = contaVertices();
+    matrizAdj = vector<vector<double>> (vertices.size(), vector<double>(vertices.size(), 0.0));
+
+    for (unsigned i = 0; i < arestas.size(); i++) {
+        unsigned indiceOrigem = getIndiceVertice(arestas.at(i)->getVerticeOrigem());
+        unsigned indiceDestino = getIndiceVertice(arestas.at(i)->getVerticeDestino());
+        matrizAdj[indiceOrigem][indiceDestino] = arestas.at(i)->getPeso();
+        matrizAdj[indiceDestino][indiceOrigem] = arestas.at(i)->getPeso();
+    }
+}
+
+
+void Grafo::imprimirMatriz() {
+    const unsigned tamanho = contaVertices().size();
+    cout << "Matriz de adjacências:" << endl;
+    for (unsigned int i = 0; i < tamanho; i++) {
+        for (unsigned int j = 0; j < tamanho; j++) {
+            cout
+                << setprecision(1)
+                << fixed 
+                << setw(3)
+                << matrizAdj[i][j] 
+                << " ";
+        }
+        cout << endl;
+    }
+}
+
+int Grafo::getIndiceVertice(Vertice *v) {
+    vector<string> vertices = contaVertices();
+    for (unsigned i = 0; i < vertices.size(); i++) {
+        if(vertices.at(i) == v->getRotulo()) {
+            return i;
+        }
+    }
+    return -1;
 }

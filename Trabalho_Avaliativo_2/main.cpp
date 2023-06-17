@@ -33,7 +33,8 @@ int main() {
             break;
 
             case 2:
-                cout << "em desenvolvimento" << endl;
+                g.gerarMatriz();
+                g.imprimirMatriz();
             break;
 
             case 3:

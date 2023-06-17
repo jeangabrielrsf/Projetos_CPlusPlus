@@ -14,6 +14,10 @@ class Grafo {
         void imprimirCaminho();
         double custoCaminho();
 
+        void gerarMatriz();
+        void imprimirMatriz();
+
+        int getIndiceVertice(Vertice *v);
         void lerArquivo();
         void salvarArquivo();
 
