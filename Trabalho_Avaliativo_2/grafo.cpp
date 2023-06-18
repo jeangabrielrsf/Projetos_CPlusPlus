@@ -1,5 +1,8 @@
 #include <iostream>
 #include <iomanip>
+#include <limits>
+#include <algorithm>
+#include <unordered_map>
 #include "grafo.h"
 
 
@@ -13,6 +16,61 @@ double Grafo::custoCaminho() {
 
     return soma;
 }
+
+
+void Grafo::ordenarVertices(vector<Vertice> vertices) {
+    for (unsigned i = 0; i < vertices.size()-1; i++) {
+        for (unsigned j = i+1; j < vertices.size(); j++) {
+            if (vertices.at(i).getRotulo() > vertices.at(j).getRotulo()) {
+                Vertice aux = vertices.at(i);
+                vertices.at(i) = vertices.at(j);
+                vertices.at(j) = aux;
+            }   
+        }
+    }
+}
+
+vector<Vertice> Grafo::contaVerticesObj() {
+    vector<Vertice> vertices;
+    vector<int> qtdArestas;
+    bool contains;
+
+    //analisando vertices de origem
+    for (unsigned i=0; i < arestas.size(); i++) {
+        if(vertices.size() == 0) { //vazio 
+            vertices.push_back(*arestas.at(i)->getVerticeOrigem());
+        } else {
+            contains = false;
+            for (unsigned j = 0; j < vertices.size(); j++) {
+                if (vertices.at(j).getRotulo() == arestas.at(i)->getVerticeOrigem()->getRotulo()) {
+                    contains = true;
+                }
+            }
+            if (!contains) {
+                vertices.push_back(*arestas.at(i)->getVerticeOrigem());
+            }
+        }
+    }
+
+    //analisando vertices de destino
+    for (unsigned i=0; i < arestas.size(); i++) {
+        if(vertices.size() == 0) { //vazio 
+            vertices.push_back(*arestas.at(i)->getVerticeDestino());
+        } else {
+            contains = false;
+            for (unsigned j = 0; j < vertices.size(); j++) {
+                if (vertices.at(j).getRotulo() == arestas.at(i)->getVerticeDestino()->getRotulo()) {
+                    contains = true;
+                }
+            }
+            if (!contains) {
+                vertices.push_back(*arestas.at(i)->getVerticeDestino());
+            }
+        }
+    }
+    return vertices;
+}
+
 
 
 vector<string> Grafo::contaVertices() {
@@ -58,16 +116,16 @@ vector<string> Grafo::contaVertices() {
 }
 
 vector<int> Grafo::contaArestas() {
-    vector<string> vertices = contaVertices();
+    vector<Vertice> vertices = contaVerticesObj();
     vector<int>qtdArestas;
     int soma;
     for(unsigned i = 0; i < vertices.size(); i++) {
         soma = 0;
         for (unsigned j = 0; j < arestas.size(); j++) {
-            if(arestas.at(j)->getVerticeOrigem()->getRotulo() == vertices.at(i)) {
+            if(arestas.at(j)->getVerticeOrigem()->getRotulo() == vertices.at(i).getRotulo()) {
                 soma += 1;
             }
-            if(arestas.at(j)->getVerticeDestino()->getRotulo() == vertices.at(i)) {
+            if(arestas.at(j)->getVerticeDestino()->getRotulo() == vertices.at(i).getRotulo()) {
                 soma += 1;
             }
         }
@@ -77,15 +135,15 @@ vector<int> Grafo::contaArestas() {
 }
 
 
-void Grafo::imprimirCaminho() {
-    vector<string> vertices = contaVertices();
+void Grafo::imprimirListaVertices() {
+    vector<Vertice> vertices = contaVerticesObj();
     vector<int> qtdArestas = contaArestas();
 
 
     cout << "Lista de Vértices: (";
     for (unsigned i = 0; i < vertices.size(); i++) {
         cout 
-            << vertices.at(i) <<": "
+            << vertices.at(i).getRotulo() <<": "
             << qtdArestas.at(i) << " ";
     }
     cout << ")" << endl;
@@ -188,4 +246,135 @@ int Grafo::getIndiceVertice(Vertice *v) {
         }
     }
     return -1;
+}
+
+
+
+
+vector<Aresta *> Grafo::caminhoMenorCusto(Vertice *origem, Vertice *destino) {
+    vector<Vertice> vertices = contaVerticesObj();
+    //mapear vértices para seus índices na matriz de adjacências
+    vector<int> indiceVertices(vertices.size(), -1);
+    for (unsigned i = 0; i < vertices.size(); i++) {
+        indiceVertices.at(i) = i;
+    }
+
+    //vetor de distancias
+    vector<double> distancias(vertices.size(), numeric_limits<double>::infinity());
+
+    //vetor de anteriores
+    vector<int> anteriores(vertices.size(), -1);
+
+    //vertices visitados
+    vector<bool> visitados(vertices.size(), false);
+
+    int indiceOrigemVertice = getIndiceVertice(origem);
+    int indiceDestinoVertice = getIndiceVertice(destino);
+    if (indiceOrigemVertice == -1 || indiceDestinoVertice == -1) {
+        cout << "Vértice de origem ou destino inexistente!" << endl;
+        return vector<Aresta *>();
+    }
+
+    distancias.at(indiceOrigemVertice) = 0;
+    //Dijkstra
+    while (true) {
+        int indiceMenorDistancia = -1;
+        double menorDistancia = numeric_limits<double>::infinity();
+        for (unsigned i = 0; i < vertices.size(); i++) {
+            if (!visitados.at(i) && distancias.at(i) < menorDistancia) {
+                menorDistancia = distancias.at(i);
+                indiceMenorDistancia = i;
+            }
+        }
+
+        if (indiceMenorDistancia == -1) {
+            break; //todos os vértices visitados
+        }
+
+        visitados.at(indiceMenorDistancia) = true;
+        
+        // Relaxar as arestas adjacentes ao vértice atual
+        for (unsigned i = 0; i < vertices.size(); i++) {
+            if (matrizAdj[indiceMenorDistancia][i] != numeric_limits<double>::infinity()) {
+                double pesoAresta = matrizAdj[indiceMenorDistancia][i];
+                double novaDistancia = distancias.at(indiceMenorDistancia) + pesoAresta;
+                
+                if (novaDistancia < distancias.at(i)) {
+                    distancias.at(i) = novaDistancia;
+                    anteriores.at(i) = indiceMenorDistancia;
+                }
+            }
+        }
+    }
+
+    // Reconstruir o caminho de menor custo
+    vector<Aresta*> caminho;
+    int indiceDestino = getIndiceVertice(destino);
+    int indiceAtual = indiceDestino;
+    while (anteriores.at(indiceAtual) != -1) {
+        int indiceAnterior = anteriores.at(indiceAtual);
+        Aresta *aresta = new Aresta(&vertices.at(indiceAnterior), &vertices.at(indiceAtual), matrizAdj[indiceAnterior][indiceAtual]);
+        caminho.push_back(aresta);
+        indiceAtual = indiceAnterior;
+    }
+    
+    reverse(caminho.begin(), caminho.end()); // Inverter o caminho para ficar na ordem correta
+    
+    return caminho;
+}
+
+void Grafo::imprimirCaminhoMenorCusto(vector<Aresta *> &caminho) {
+    if (caminho.size() == 0){
+        cout << "Não tem caminho!" << endl;
+        return;
+    }
+
+    cout << "Caminho de menor custo: " << endl;
+    for (unsigned i = 0; i < caminho.size(); i++) {
+        Aresta* aresta = caminho.at(i);
+        cout << aresta->getVerticeOrigem()->getRotulo() << " -> ";
+    }
+    cout << caminho.back()->getVerticeDestino()->getRotulo() << endl;
+}
+
+Vertice* Grafo::getVerticePorRotulo(string &rotulo) {
+    vector<Vertice> vertices = contaVerticesObj();
+    for (unsigned i = 0; i < vertices.size(); i++) {
+        if (vertices.at(i).getRotulo() == rotulo) {
+            return &vertices.at(i);
+        }
+    }
+    return nullptr; // Retorna nullptr se o vértice não for encontrado
+}
+
+
+// void Grafo::imprimirVerticeMaiorCentralidade() {
+//     double maiorCentralidade = 0;
+//     Vertice* verticeMaiorCentralidade = nullptr;
+
+//     vector<Vertice> vertices = contaVerticesObj();
+
+//     for (unsigned i = 0; i < arestas.size(); i++) {
+//         Vertice* origem = arestas.at(i)->getVerticeOrigem();
+//         Vertice* destino = arestas.at(i)->getVerticeDestino();
+
+//         int centralidadeOrigem = contaArestas().at(getIndiceVertice(origem));
+//         if (centralidadeOrigem > maiorCentralidade) {
+//             maiorCentralidade = centralidadeOrigem;
+//             verticeMaiorCentralidade = origem;
+//         }
+
+//         int centralidadeDestino = contaArestas().at(getIndiceVertice(destino));
+//         if (centralidadeDestino > maiorCentralidade) {
+//             maiorCentralidade = centralidadeDestino;
+//             verticeMaiorCentralidade = destino;
+//         }
+
+//     }
+// }
+
+void Grafo::getPesoArestas() {
+    for (unsigned i = 0; i < arestas.size(); i++) {
+        pesoArestas.push_back(arestas.at(i)->getPeso());
+    }
 }

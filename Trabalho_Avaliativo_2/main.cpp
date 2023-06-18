@@ -9,8 +9,14 @@ using namespace std;
 int main() {
 
     int escolhaMenu = 0;
+    Vertice* origem = nullptr;
+    Vertice* destino = nullptr;
+    string rotuloOrigem;
+    string rotuloDestino;
     Grafo g;
     g.lerArquivo();
+    g.getPesoArestas();
+
 
 
     while (escolhaMenu != 6) {
@@ -29,7 +35,7 @@ int main() {
 
         switch (escolhaMenu) {
             case 1:
-                g.imprimirCaminho();
+                g.imprimirListaVertices();
             break;
 
             case 2:
@@ -38,7 +44,25 @@ int main() {
             break;
 
             case 3:
-                cout << "em desenvolvimento" << endl;                
+                system("clear");
+                cout << "Digite o rótulo do vértice de origem:" << endl;
+                cin >> rotuloOrigem;
+                cout << "Digite o rótulo do vértice de destino:" << endl;
+                cin >> rotuloDestino;
+
+                origem = g.getVerticePorRotulo(rotuloOrigem);
+                cout << origem->getRotulo();
+                destino = g.getVerticePorRotulo(rotuloDestino);
+                cout << destino->getRotulo();
+
+                if (origem == nullptr || destino == nullptr) {
+                    cout << "Vértice não encontrado!" << endl;
+                    continue;
+                } else {
+                    vector<Aresta *>caminho = g.caminhoMenorCusto(origem, destino);
+                    g.imprimirCaminhoMenorCusto(caminho);
+                }
+
             break;
 
             case 4:
