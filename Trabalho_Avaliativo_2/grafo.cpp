@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <limits>
+#include <stack>
 #include <algorithm>
 #include <unordered_map>
 #include "grafo.h"
@@ -377,4 +378,49 @@ void Grafo::getPesoArestas() {
     for (unsigned i = 0; i < arestas.size(); i++) {
         pesoArestas.push_back(arestas.at(i)->getPeso());
     }
+}
+
+bool Grafo::ehConectado() {
+    vector<Vertice> vertices = contaVerticesObj();
+
+    vector<bool> visitados(vertices.size(), false);
+
+    stack<int> pilha;
+
+    int indexPrimeiroVertice = 0;
+    pilha.push(indexPrimeiroVertice);
+    visitados.at(indexPrimeiroVertice) = true;
+
+    while (!pilha.empty()) {
+        int indiceVertice = pilha.top();
+        pilha.pop();
+
+        for (unsigned i = 0; i < arestas.size(); i++) {
+            Vertice *origem = arestas.at(i)->getVerticeOrigem();
+            Vertice *destino = arestas.at(i)->getVerticeDestino();
+
+            if (indiceVertice == getIndiceVertice(origem)) {
+                int indiceDestino = getIndiceVertice(destino);
+                if (!visitados.at(indiceDestino)) {
+                    pilha.push(indiceDestino);
+                    visitados.at(indiceDestino) = true;
+                }
+
+            } else if (indiceVertice == getIndiceVertice(destino)) {
+                int indiceOrigem = getIndiceVertice(origem);
+                if (!visitados.at(indiceOrigem)) {
+                    pilha.push(indiceOrigem);
+                    visitados.at(indiceOrigem) = true;
+                }
+            }
+        }
+    }
+
+    for (unsigned i = 0; i < visitados.size(); i++) {
+        if (!visitados.at(i)) {
+            return false;
+        }
+    }
+
+    return true;
 }

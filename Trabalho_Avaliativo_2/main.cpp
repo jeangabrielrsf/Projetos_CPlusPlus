@@ -67,6 +67,7 @@ int main() {
 
             case 4:
                 cout << "em desenvolvimento" << endl;
+                cout << (g.ehConectado() ? "O grafo é totalmente conectado!" : "O grafo não é totalmente conectado") << endl;
             break;
 
             case 5:

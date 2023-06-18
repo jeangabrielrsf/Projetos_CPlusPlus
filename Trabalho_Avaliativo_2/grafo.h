@@ -34,6 +34,8 @@ class Grafo {
         int getArestasSize();
         void imprimirVerticeMaiorCentralidade();
 
+        bool ehConectado();
+
     private:
         vector<Aresta *>arestas;
         vector<double> pesoArestas;
