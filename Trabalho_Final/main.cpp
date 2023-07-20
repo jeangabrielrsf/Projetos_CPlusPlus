@@ -1,7 +1,11 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <vector>
 #include <python3.8/Python.h>
+
+#define NOME_ARQUIVO "notas.csv"
+
 
 
 using namespace std;
@@ -19,24 +23,29 @@ int main() {
     }
 
     PyObject * py_readCSV = PyObject_GetAttrString(pModule, "read_csv");
-    if (!PyCallable_Check(py_readCSV)) {
+    PyObject * py_listCSVColumns = PyObject_GetAttrString(pModule, "list_csv_columns");
+    if (!PyCallable_Check(py_readCSV) || !PyCallable_Check(py_listCSVColumns)) {
         cerr << "Erro! Funçoes Python não podem ser chamadas!" << endl;
         Py_XDECREF(py_readCSV);
+        Py_XDECREF(py_listCSVColumns);
         Py_XDECREF(pModule);
         Py_Finalize();
         return -1;
     }
 
-    PyObject * pArgs;
-    PyObject * CSVData;
     int menuChoice = 0;
-    string csvFilePath = "notas.csv";
+    string csvFilePath = NOME_ARQUIVO;
+    PyObject * pArgs = Py_BuildValue("(s)", csvFilePath.c_str());
+    PyObject * CSVData;
+    PyObject * CSVColumns;
+    vector<string> fileColumns;
 
 
     while (menuChoice != 9) {
         cout << setw(30) << setfill('#') << endl;
-        cout << setw(30) << "Menu Gerenciador" << endl;
-        cout << "Escolha uma das opções aabixo: " << endl;
+        cout << setw(30) << "\nMenu Gerenciador\n" << endl;
+        cout << setw(30) << setfill('#') << endl;
+        cout << "Escolha uma das opções abaixo: " << endl;
         cout << "[1] - Ler dados de um arquivo CSV" << endl;
         cout << "[2] - Inserir dados em um arquivo CSV" << endl;
         cout << "[3] - Remover dados de um arquivo CSV" << endl;
@@ -50,7 +59,6 @@ int main() {
         {
         case 1:
             cout << "Opção 1 selecionada" << endl;
-            pArgs = Py_BuildValue("(s)", csvFilePath.c_str());
             CSVData = PyObject_CallObject(py_readCSV, pArgs);
             if (CSVData != nullptr) {
                 cout << "Arquivo .csv lido com sucesso:" << endl;
@@ -58,16 +66,43 @@ int main() {
                 string data = PyUnicode_AsUTF8(pyStrRepr);
                 cout << data << endl;
                 Py_XDECREF(pyStrRepr);
-                Py_XDECREF(CSVData);
             } else {
-                cerr << "Falha na leitura do arquivo .csv" << endl;
-                return -1;
+                cerr << "Arquivo inexistente ou vazio! "<< endl;
             }
 
             break;
 
         case 2:
-            cout << "Opção 2 selecionada" << endl;
+            CSVData = PyObject_CallObject(py_readCSV, pArgs);
+            if (CSVData == nullptr) {
+                cerr << "Arquivo vazio ou inexistente!" << endl;
+                break;
+            }
+            CSVColumns = PyObject_CallObject(py_listCSVColumns, pArgs);
+            if (PyList_Check(CSVColumns)) {
+                for (Py_ssize_t i=0; i < PyList_Size(CSVColumns); i++) {
+                    PyObject * pValue = PyList_GetItem(CSVColumns, i);
+                    if (PyUnicode_Check(pValue)) {
+                        string column = PyUnicode_AsUTF8(pValue);
+                        fileColumns.push_back(column);
+                    }
+                }
+            } else {
+                cerr << "Falha ao obter o nome das colunas" << endl;
+                Py_XDECREF(CSVColumns);
+            }
+
+
+            if (!fileColumns.empty()) {
+                cout << "Colunas no arquivo .csv" << endl;
+                for (const auto& column : fileColumns) {
+                    cout << column << endl;
+                }
+            } else {
+                cerr << "Nenhuma coluna encontrada no arquivo" << endl;
+            }
+
+
             break;
 
         case 3:
@@ -81,6 +116,7 @@ int main() {
 
         case 9:
             cout << "Fechando o programa..." << endl;
+            Py_XDECREF(CSVData);
             break;
         
         default:
