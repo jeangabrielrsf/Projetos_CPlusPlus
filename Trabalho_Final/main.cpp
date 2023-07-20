@@ -81,8 +81,8 @@ int main() {
             pAddResult = PyObject_CallObject(pAdd, pArgs);
             pMultiplyResult = PyObject_CallObject(pMultiply, pArgs);
 
-            PyArg_Parse(pAdd, "i", addResult);
-            PyArg_Parse(pMultiply, "i", multiplyResult);
+            PyArg_Parse(pAddResult, "i", &addResult);
+            PyArg_Parse(pMultiplyResult, "i", &multiplyResult);
 
             Py_XDECREF(pArgs);
             Py_XDECREF(pAddResult);
@@ -92,8 +92,8 @@ int main() {
             Py_XDECREF(pModule);
             Py_Finalize();
 
-            cout << "Adição entre " << a << " e " << b << ": " << pAddResult << endl;
-            cout << "Multiplicação entre " << a << " e " << b << ": " << pMultiplyResult << endl;
+            cout << "Adição entre " << a << " e " << b << ": " << addResult << endl;
+            cout << "Multiplicação entre " << a << " e " << b << ": " << multiplyResult << endl;
 
 
             break;
