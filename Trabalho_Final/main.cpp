@@ -7,7 +7,7 @@ int main() {
 
     int menuChoice = 0;
 
-    while (menuChoice != -1) {
+    while (menuChoice != 9) {
         cout << setw(30) << setfill('#') << endl;
         cout << setw(30) << "Menu Gerenciador" << endl;
         cout << "Escolha uma das opções aabixo: " << endl;
@@ -16,7 +16,7 @@ int main() {
         cout << "[3] - Remover dados de um arquivo CSV" << endl;
         cout << "[4] - Procurar por algum dado específico no arquivo" << endl;
         cout << endl;
-        cout << "Selecionar [-1] para fechar o programa" << endl;
+        cout << "Selecionar [9] para fechar o programa" << endl;
 
         cin >> menuChoice;
 
@@ -38,6 +38,9 @@ int main() {
             cout << "Opção 4 selecionada" << endl;
             break;
 
+        case 9:
+            cout << "Fechando o programa..." << endl;
+            break;
         
         default:
             cout << "Opção indisponível!" << endl;
