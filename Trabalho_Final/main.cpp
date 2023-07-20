@@ -1,7 +1,8 @@
 #include <iostream>
 #include <iomanip>
-#include <stdio.h>
+#include <string>
 #include <python3.8/Python.h>
+
 
 using namespace std;
 
@@ -17,33 +18,25 @@ int main() {
         return -1;
     }
 
-    PyObject * pAdd = PyObject_GetAttrString(pModule, "add");
-    PyObject * pMultiply = PyObject_GetAttrString(pModule, "multiply");
-
-    if (!PyCallable_Check(pAdd) || !PyCallable_Check(pMultiply)) {
-        cerr << "Python functions are not callable" << endl;
-        Py_XDECREF(pAdd);
-        Py_XDECREF(pMultiply);
+    PyObject * py_readCSV = PyObject_GetAttrString(pModule, "read_csv");
+    if (!PyCallable_Check(py_readCSV)) {
+        cerr << "Erro! Funçoes Python não podem ser chamadas!" << endl;
+        Py_XDECREF(py_readCSV);
         Py_XDECREF(pModule);
         Py_Finalize();
         return -1;
     }
 
-    int a, b;
-    int addResult = 0;
-    int multiplyResult = 1;
     PyObject * pArgs;
-    PyObject * pAddResult;
-    PyObject * pMultiplyResult;
-
+    PyObject * CSVData;
     int menuChoice = 0;
+    string csvFilePath = "notas.csv";
 
 
     while (menuChoice != 9) {
         cout << setw(30) << setfill('#') << endl;
         cout << setw(30) << "Menu Gerenciador" << endl;
         cout << "Escolha uma das opções aabixo: " << endl;
-        cout << "TESTE: USANDO PYTHON NÚMERO 5" << endl;
         cout << "[1] - Ler dados de um arquivo CSV" << endl;
         cout << "[2] - Inserir dados em um arquivo CSV" << endl;
         cout << "[3] - Remover dados de um arquivo CSV" << endl;
@@ -57,6 +50,19 @@ int main() {
         {
         case 1:
             cout << "Opção 1 selecionada" << endl;
+            pArgs = Py_BuildValue("(s)", csvFilePath.c_str());
+            CSVData = PyObject_CallObject(py_readCSV, pArgs);
+            if (CSVData != nullptr) {
+                cout << "Arquivo .csv lido com sucesso:" << endl;
+                PyObject * pyStrRepr = PyObject_Repr(CSVData);
+                string data = PyUnicode_AsUTF8(pyStrRepr);
+                cout << data << endl;
+                Py_XDECREF(pyStrRepr);
+                Py_XDECREF(CSVData);
+            } else {
+                cerr << "Falha na leitura do arquivo .csv" << endl;
+                return -1;
+            }
 
             break;
 
@@ -72,31 +78,6 @@ int main() {
             cout << "Opção 4 selecionada" << endl;
             break;
 
-        case 5:
-            cout << "Digite o primeiro número:" << endl;
-            cin >> a;
-            cout << "Digite o segundo número:" << endl;
-            cin >> b;
-            pArgs = Py_BuildValue("(ii)", a, b);
-            pAddResult = PyObject_CallObject(pAdd, pArgs);
-            pMultiplyResult = PyObject_CallObject(pMultiply, pArgs);
-
-            PyArg_Parse(pAddResult, "i", &addResult);
-            PyArg_Parse(pMultiplyResult, "i", &multiplyResult);
-
-            Py_XDECREF(pArgs);
-            Py_XDECREF(pAddResult);
-            Py_XDECREF(pMultiplyResult);
-            Py_XDECREF(pAdd);
-            Py_XDECREF(pMultiply);
-            Py_XDECREF(pModule);
-            Py_Finalize();
-
-            cout << "Adição entre " << a << " e " << b << ": " << addResult << endl;
-            cout << "Multiplicação entre " << a << " e " << b << ": " << multiplyResult << endl;
-
-
-            break;
 
         case 9:
             cout << "Fechando o programa..." << endl;

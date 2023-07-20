@@ -1,0 +1,7 @@
+[
+    {
+        "command": "g++ -Wall -std=c++11   -c -o main.o main.cpp",
+        "directory": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final",
+        "file": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final/main.cpp"
+    }
+]
