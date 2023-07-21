@@ -24,10 +24,16 @@ int main() {
 
     PyObject * py_readCSV = PyObject_GetAttrString(pModule, "read_csv");
     PyObject * py_listCSVColumns = PyObject_GetAttrString(pModule, "list_csv_columns");
-    if (!PyCallable_Check(py_readCSV) || !PyCallable_Check(py_listCSVColumns)) {
+    PyObject * py_insertIntoCSV = PyObject_GetAttrString(pModule, "insert_into_csv");
+    if (
+        !PyCallable_Check(py_readCSV) || 
+        !PyCallable_Check(py_listCSVColumns) ||
+        !PyCallable_Check(py_insertIntoCSV)
+        ) {
         cerr << "Erro! Funçoes Python não podem ser chamadas!" << endl;
         Py_XDECREF(py_readCSV);
         Py_XDECREF(py_listCSVColumns);
+        Py_XDECREF(py_insertIntoCSV);
         Py_XDECREF(pModule);
         Py_Finalize();
         return -1;
@@ -94,14 +100,36 @@ int main() {
 
 
             if (!fileColumns.empty()) {
-                cout << "Colunas no arquivo .csv" << endl;
+                vector<string> insertColumns;
+                string data;
+                cout << "Inserindo dados no arquivo .csv:" << endl;
+                cin.clear();
+                cin.ignore(__INT_MAX__, '\n');
                 for (const auto& column : fileColumns) {
-                    cout << column << endl;
+                    cout << "Insira o dado para a coluna " + column << endl;
+                    getline(cin, data);
+                    insertColumns.push_back(data);
                 }
+
+                PyObject * pInsertList = PyList_New(insertColumns.size());
+                for (size_t i = 0; i < insertColumns.size(); i++) {
+                    PyObject* pValue = PyUnicode_FromString(insertColumns.at(i).c_str());
+                    PyList_SetItem(pInsertList, i, pValue);
+                }
+                PyObject * pArgsInsert = Py_BuildValue("(sO)", csvFilePath.c_str(), pInsertList);
+                PyObject_CallObject(py_insertIntoCSV, pArgsInsert);
+
+
+                Py_XDECREF(pArgsInsert);
+                Py_XDECREF(py_insertIntoCSV);
+                Py_XDECREF(pInsertList);
+                insertColumns.clear();
+                fileColumns.clear();
+
+
             } else {
                 cerr << "Nenhuma coluna encontrada no arquivo" << endl;
             }
-
 
             break;
 
