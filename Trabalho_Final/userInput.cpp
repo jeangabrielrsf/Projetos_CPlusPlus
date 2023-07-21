@@ -23,7 +23,7 @@ vector<string> UserInput::getInputList(const vector<string>& columnNames) {
     vector<string> inputList;
     cout << columnNames.size();
     for (unsigned i =0; i < columnNames.size(); i ++) {
-        string data = getInputString("Enter the data for column " + columnNames.at(i));
+        string data = getInputString("Entre com o dado para a coluna " + columnNames.at(i));
         inputList.push_back(data);
     }
     return inputList;
