@@ -1,24 +1,24 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "C/C++ Runner: Debug Session",
-      "type": "cppdbg",
-      "request": "launch",
-      "args": [],
-      "stopAtEntry": false,
-      "externalConsole": false,
-      "cwd": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final",
-      "program": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final/build/Debug/outDebug",
-      "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
-      "setupCommands": [
-        {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
-        }
-      ]
-    }
-  ]
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "C/C++ Runner: Debug Session",
+			"type": "cppdbg",
+			"request": "launch",
+			"args": ["-Wall", "-std=c++11"],
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"cwd": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final",
+			"program": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final/executeGerenciador",
+			"MIMode": "gdb",
+			"miDebuggerPath": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			]
+		}
+	]
 }

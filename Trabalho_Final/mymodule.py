@@ -30,4 +30,10 @@ def list_csv_columns(file_path):
 def search_into_csv(file_path, criteria):
     df = read_csv(file_path)
     result = df.query(criteria)
-    return result.to_dict(orient='list')
+    return result.values.tolist()
+
+def delete_from_csv(file_path, conditions):
+    df = read_csv(file_path)
+    for col, val in conditions.items():
+        df = df[df[col] != val]
+    df.to_csv(file_path, index=False)
