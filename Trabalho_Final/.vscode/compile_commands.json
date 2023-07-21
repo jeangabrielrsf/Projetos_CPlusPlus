@@ -3,5 +3,20 @@
         "command": "g++ -Wall -std=c++11   -c -o main.o main.cpp",
         "directory": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final",
         "file": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final/main.cpp"
+    },
+    {
+        "command": "g++ -Wall -std=c++11   -c -o runApp.o runApp.cpp",
+        "directory": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final",
+        "file": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final/runApp.cpp"
+    },
+    {
+        "command": "g++ -Wall -std=c++11   -c -o csvTool.o csvTool.cpp",
+        "directory": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final",
+        "file": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final/csvTool.cpp"
+    },
+    {
+        "command": "g++ -Wall -std=c++11   -c -o userInput.o userInput.cpp",
+        "directory": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final",
+        "file": "/home/jeanfrusca/Documentos/Faculdade/2023.1/LingProg/Trabalhos/Trabalho_Final/userInput.cpp"
     }
 ]
