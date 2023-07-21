@@ -49,6 +49,8 @@ void RunApp::run() {
 }
 
 void RunApp::printMenu() {
+    cout << endl;
+    cout << endl;
     cout << setw(15) << setfill('-') << "" << endl;
     cout << "Menu Gerenciador" << endl;
     cout << setw(15) << setfill('-') << "" << endl;
@@ -113,22 +115,13 @@ void RunApp::searchCSV() {
         cerr << "Não foram encontradas colunas no arquivo CSV" << endl;
         return;
     }
-
     cin.clear();
     cin.ignore(__INT_MAX__, '\n');
     string searchCriteria = userInput.getSearchCriteria();
-    if (csvTool.searchCSV(csvFilePath, searchCriteria, searchResult)) {
-        if (!searchResult.empty()) {
-            cout << "Resultados da busca:" << endl;            
-            for (const auto& row : searchResult) {
-                for (const auto& value : row) {
-                    cout << value.first << ": " << value.second << endl;
-                }
-                cout << endl;
-            }
-        }else {
-            cout << "Não foram encontrados resultados com esse critério!" << endl;
-        }        
+    if (csvTool.searchCSV(csvFilePath, searchCriteria, searchResult)) {        
+        PyObject* pyStrRepr = PyObject_Repr(searchResult);
+        string data = PyUnicode_AsUTF8(pyStrRepr);
+        cout << data << endl;
     } else {
         cerr << "Falha ao buscar dados!" << endl;
     }

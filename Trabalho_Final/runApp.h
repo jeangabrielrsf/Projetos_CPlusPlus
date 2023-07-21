@@ -21,7 +21,7 @@ private:
     PyObject* CSVData;
     PyObject* CSVColumns;
     vector<string> fileColumns;
-    vector<map<string, string>> searchResult;
+    PyObject* searchResult;
 
     void printMenu();
     void populateColumns();

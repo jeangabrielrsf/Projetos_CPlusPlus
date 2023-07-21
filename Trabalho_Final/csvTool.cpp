@@ -109,14 +109,12 @@ bool CsvTool::listCSVColumns(string& filePath, vector<string>& columns) {
     return true;
 }
 
-bool CsvTool::searchCSV(string& filePath, string& criteria, vector<map<string,string>>&searchResult) {
-    cout << "entrei no searchCSV";
+bool CsvTool::searchCSV(string& filePath, string& criteria, PyObject* &searchResult) {
     PyObject* pModule = PyImport_ImportModule("mymodule");
     if (pModule == nullptr) {
         cerr << "Falha na importação do módulo Python." << endl;
         return false;
     }
-
     PyObject* py_searchCSV = PyObject_GetAttrString(pModule, "search_into_csv");
     if (!PyCallable_Check(py_searchCSV)) {
         cerr << "Erro! Função 'search_into_csv' não pôde ser chamada" << endl;
@@ -125,42 +123,12 @@ bool CsvTool::searchCSV(string& filePath, string& criteria, vector<map<string,st
         return false;
     }
 
-    PyObject* pArgsSearch = Py_BuildValue("(s,s)", filePath.c_str(), PyUnicode_FromString(criteria.c_str()));
-    PyObject* pySearchResult = PyObject_CallObject(py_searchCSV, pArgsSearch);
-    if (PyList_Check(pySearchResult) && pySearchResult != nullptr) {
-        Py_ssize_t rowsNumber = PyList_Size(pySearchResult);
-        for (Py_ssize_t i = 0; i < rowsNumber; i++) {
-            PyObject* pRow = PyList_GetItem(pySearchResult, i);
-            if (PyDict_Check(pRow)) {
-                PyObject* pKey, * pValue;
-                Py_ssize_t pos = 0;
-                map<string, string> rowResult;
-
-                while (PyDict_Next(pRow, &pos, &pKey, &pValue)) {
-                    string key = PyUnicode_AsUTF8(pKey);
-                    if (PyList_Check(pValue)) {
-                        string value = PyUnicode_AsUTF8(pValue);
-                        rowResult[key] = value;
-                    }
-                }
-                searchResult.push_back(rowResult);
-            }
-        }
-    Py_XDECREF(pySearchResult);
-    } else {
-        PyErr_Print();
-        cerr << "O resultado da busca não é um dicionário Python válido!" << endl;
-        Py_XDECREF(pySearchResult);
-        Py_XDECREF(pArgsSearch);
-        Py_XDECREF(py_searchCSV);
-        Py_XDECREF(pModule);
-        return false;
-    }
+    PyObject* pArgsSearch = Py_BuildValue("(s,s)", filePath.c_str(), criteria.c_str());
+    searchResult = PyObject_CallObject(py_searchCSV, pArgsSearch);
 
     Py_XDECREF(pArgsSearch);
     Py_XDECREF(py_searchCSV);
     Py_XDECREF(pModule);
-
     return true;
 }
 
