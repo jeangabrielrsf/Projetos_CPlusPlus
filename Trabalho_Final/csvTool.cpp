@@ -109,7 +109,8 @@ bool CsvTool::listCSVColumns(string& filePath, vector<string>& columns) {
     return true;
 }
 
-bool CsvTool::searchCSV(string& filePath, string& criteria, map<string, vector<string>>&searchResult) {
+bool CsvTool::searchCSV(string& filePath, string& criteria, vector<map<string,string>>&searchResult) {
+    cout << "entrei no searchCSV";
     PyObject* pModule = PyImport_ImportModule("mymodule");
     if (pModule == nullptr) {
         cerr << "Falha na importação do módulo Python." << endl;
@@ -124,7 +125,7 @@ bool CsvTool::searchCSV(string& filePath, string& criteria, map<string, vector<s
         return false;
     }
 
-    PyObject* pArgsSearch = Py_BuildValue("(s,s)", filePath.c_str(), criteria.c_str());
+    PyObject* pArgsSearch = Py_BuildValue("(s,s)", filePath.c_str(), PyUnicode_FromString(criteria.c_str()));
     PyObject* pySearchResult = PyObject_CallObject(py_searchCSV, pArgsSearch);
     if (PyList_Check(pySearchResult) && pySearchResult != nullptr) {
         Py_ssize_t rowsNumber = PyList_Size(pySearchResult);
@@ -133,24 +134,19 @@ bool CsvTool::searchCSV(string& filePath, string& criteria, map<string, vector<s
             if (PyDict_Check(pRow)) {
                 PyObject* pKey, * pValue;
                 Py_ssize_t pos = 0;
+                map<string, string> rowResult;
 
                 while (PyDict_Next(pRow, &pos, &pKey, &pValue)) {
                     string key = PyUnicode_AsUTF8(pKey);
-                    vector<string> values;
                     if (PyList_Check(pValue)) {
-                        for (Py_ssize_t j = 0; j < PyList_Size(pValue); j++) {
-                            PyObject* pItem = PyList_GetItem(pValue, j);
-                            if (PyUnicode_Check(pItem)) {
-                                values.push_back(PyUnicode_AsUTF8(pItem));
-                            }
-                        }
-                        searchResult[key] = values;
+                        string value = PyUnicode_AsUTF8(pValue);
+                        rowResult[key] = value;
                     }
                 }
-
+                searchResult.push_back(rowResult);
             }
         }
-        Py_XDECREF(pySearchResult);
+    Py_XDECREF(pySearchResult);
     } else {
         PyErr_Print();
         cerr << "O resultado da busca não é um dicionário Python válido!" << endl;

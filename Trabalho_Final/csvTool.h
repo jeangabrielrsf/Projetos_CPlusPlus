@@ -16,7 +16,7 @@ class CsvTool {
         bool readCSV(string &filePath, PyObject* &csvData);
         bool insertIntoCSV(string& filePath, vector<string>& data);
         bool listCSVColumns(string& filePath, vector<string>& columns);
-        bool searchCSV(string& filePath, string& searchCriteria, map<string, vector<string>> &searchResult);
+        bool searchCSV(string& filePath, string& searchCriteria,vector<map<string,string>> &searchResult);
         bool deleteFromCSV(string& filePath, map<string, string>& conditions);
 };
 

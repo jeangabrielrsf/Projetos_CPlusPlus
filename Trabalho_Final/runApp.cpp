@@ -119,11 +119,10 @@ void RunApp::searchCSV() {
     string searchCriteria = userInput.getSearchCriteria();
     if (csvTool.searchCSV(csvFilePath, searchCriteria, searchResult)) {
         if (!searchResult.empty()) {
-            cout << "Resultados da busca:" << endl;
+            cout << "Resultados da busca:" << endl;            
             for (const auto& row : searchResult) {
-                cout << row.first << ": ";
-                for (const auto& value : row.second) {
-                    cout << value << " ";
+                for (const auto& value : row) {
+                    cout << value.first << ": " << value.second << endl;
                 }
                 cout << endl;
             }
