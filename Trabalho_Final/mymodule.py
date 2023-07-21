@@ -26,3 +26,8 @@ def list_csv_columns(file_path):
     df = read_csv(file_path)
     columns = df.columns.tolist()
     return columns
+
+def search_into_csv(file_path, criteria):
+    df = read_csv(file_path)
+    result = df.query(criteria)
+    return result.to_dict(orient='list')

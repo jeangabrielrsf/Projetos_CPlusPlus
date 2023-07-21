@@ -25,15 +25,18 @@ int main() {
     PyObject * py_readCSV = PyObject_GetAttrString(pModule, "read_csv");
     PyObject * py_listCSVColumns = PyObject_GetAttrString(pModule, "list_csv_columns");
     PyObject * py_insertIntoCSV = PyObject_GetAttrString(pModule, "insert_into_csv");
+    PyObject * py_searchCSV = PyObject_GetAttrString(pModule, "search_into_csv");
     if (
         !PyCallable_Check(py_readCSV) || 
         !PyCallable_Check(py_listCSVColumns) ||
-        !PyCallable_Check(py_insertIntoCSV)
+        !PyCallable_Check(py_insertIntoCSV) ||
+        !PyCallable_Check(py_searchCSV)
         ) {
         cerr << "Erro! Funçoes Python não podem ser chamadas!" << endl;
         Py_XDECREF(py_readCSV);
         Py_XDECREF(py_listCSVColumns);
         Py_XDECREF(py_insertIntoCSV);
+        Py_XDECREF(py_searchCSV);
         Py_XDECREF(pModule);
         Py_Finalize();
         return -1;
@@ -139,6 +142,7 @@ int main() {
         
         case 4:
             cout << "Opção 4 selecionada" << endl;
+
             break;
 
 
