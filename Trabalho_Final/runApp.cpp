@@ -117,9 +117,7 @@ void RunApp::searchCSV() {
     cin.clear();
     cin.ignore(__INT_MAX__, '\n');
     string searchCriteria = userInput.getSearchCriteria();
-    cout << "\antes do if do search\n" << endl;
     if (csvTool.searchCSV(csvFilePath, searchCriteria, searchResult)) {
-        cout << "\nentrei no if do search\n" << endl;
         if (!searchResult.empty()) {
             cout << "Resultados da busca:" << endl;
             for (const auto& row : searchResult) {

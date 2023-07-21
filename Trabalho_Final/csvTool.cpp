@@ -126,24 +126,30 @@ bool CsvTool::searchCSV(string& filePath, string& criteria, map<string, vector<s
 
     PyObject* pArgsSearch = Py_BuildValue("(s,s)", filePath.c_str(), criteria.c_str());
     PyObject* pySearchResult = PyObject_CallObject(py_searchCSV, pArgsSearch);
-    if (PyDict_Check(pySearchResult) && pySearchResult != nullptr) {
-        PyObject* pKey, * pValue;
-        Py_ssize_t pos = 0;
+    if (PyList_Check(pySearchResult) && pySearchResult != nullptr) {
+        Py_ssize_t rowsNumber = PyList_Size(pySearchResult);
+        for (Py_ssize_t i = 0; i < rowsNumber; i++) {
+            PyObject* pRow = PyList_GetItem(pySearchResult, i);
+            if (PyDict_Check(pRow)) {
+                PyObject* pKey, * pValue;
+                Py_ssize_t pos = 0;
 
-        while (PyDict_Next(pySearchResult, &pos, &pKey, &pValue)) {
-            string key = PyUnicode_AsUTF8(pKey);
-            vector<string> values;
-            if (PyList_Check(pValue)) {
-                for (Py_ssize_t i = 0; i < PyList_Size(pValue); i++) {
-                    PyObject* pItem = PyList_GetItem(pValue, i);
-                    if (PyUnicode_Check(pItem)) {
-                        values.push_back(PyUnicode_AsUTF8(pItem));
+                while (PyDict_Next(pRow, &pos, &pKey, &pValue)) {
+                    string key = PyUnicode_AsUTF8(pKey);
+                    vector<string> values;
+                    if (PyList_Check(pValue)) {
+                        for (Py_ssize_t j = 0; j < PyList_Size(pValue); j++) {
+                            PyObject* pItem = PyList_GetItem(pValue, j);
+                            if (PyUnicode_Check(pItem)) {
+                                values.push_back(PyUnicode_AsUTF8(pItem));
+                            }
+                        }
+                        searchResult[key] = values;
                     }
                 }
-                searchResult[key] = values;
+
             }
         }
-
         Py_XDECREF(pySearchResult);
     } else {
         PyErr_Print();
